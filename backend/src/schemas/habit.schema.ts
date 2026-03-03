@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { z } from "zod";
 
 const dailySchema = z.object({
@@ -35,4 +36,10 @@ export const createHabitSchema = z.object({
 export const updateHabitSchema = z.object({
   name: z.string().min(1, "Habit name is required").optional(),
   frequency: frequencySchema.optional(),
+});
+
+export const habitIdParamSchema = z.object({
+  id: z.string().refine((value) => mongoose.Types.ObjectId.isValid(value), {
+    message: "Invalid habit id",
+  }),
 });

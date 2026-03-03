@@ -12,7 +12,9 @@ export const registerUser = async (
   const existingUser = await findUserByEmail(email);
 
   if (existingUser) {
-    throw new Error("User already exists");
+    const error = new Error("User already exists");
+    error.name = "User already exists";
+    throw error;
   }
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -30,13 +32,17 @@ export const loginUser = async (email: string, password: string) => {
   const user = await findUserByEmail(email);
 
   if (!user) {
-    throw new Error("Invalid credentials");
+    const error = new Error("Invalid credentials");
+    error.name = "Invalid credentials";
+    throw error;
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    throw new Error("Invalid credentials");
+    const error = new Error("Invalid credentials");
+    error.name = "Invalid credentials";
+    throw error;
   }
 
   const token = generateToken(user.id);

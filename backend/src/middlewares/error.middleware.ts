@@ -10,14 +10,24 @@ export const errorMiddleware = (
 ) => {
   console.error(error);
 
-  // ZOD VALIDATION
   if (error instanceof ZodError) {
     return res.status(400).json(formatZodError(error));
   }
 
-  // NOT FOUND
-  if (error.message === "Habit not found") {
+  if (error.name === "Invalid credentials") {
+    return res.status(401).json({ message: error.message });
+  }
+
+  if (error.name === "NotFound") {
     return res.status(404).json({ message: error.message });
+  }
+
+  if (error.name === "Forbidden") {
+    return res.status(403).json({ message: error.message });
+  }
+
+  if (error.name === "DuplicateCompletion") {
+    return res.status(400).json({ message: error.message });
   }
 
   // ERROR POR DEFECTO
