@@ -7,6 +7,7 @@ import {
   getUserHabits,
   updateUserHabit,
   deleteUserHabit,
+  getHabitsWithStatus,
 } from "../services/habit.service";
 
 import { createHabitSchema, updateHabitSchema } from "../schemas/habit.schema";
@@ -29,8 +30,8 @@ export const createHabitController = asyncHandler(
 
 export const getHabitsController = asyncHandler(
   async (req: AuthRequest, res: Response) => {
-    const habits = await getUserHabits(req.userId!);
-    res.status(200).json(habits);
+    const habits = await getHabitsWithStatus(req.userId!);
+    return res.json(habits);
   },
 );
 

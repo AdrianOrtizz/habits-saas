@@ -28,6 +28,7 @@ const completionSchema = new Schema<CompletionDocument>(
 );
 
 completionSchema.index({ habitId: 1, periodKey: 1 }, { unique: true });
+completionSchema.index({ userId: 1, periodKey: 1 });
 
 export const CompletionModel = model<CompletionDocument>(
   "Completion",
