@@ -11,14 +11,10 @@ import {
 
 import { createHabitSchema, updateHabitSchema } from "../schemas/habit.schema";
 
-import { ZodError } from "zod";
-import { formatZodError } from "../utils/zod-error.utils";
+import { asyncHandler } from "../utils/asyncHandler";
 
-export const createHabitController = async (
-  req: AuthRequest,
-  res: Response,
-) => {
-  try {
+export const createHabitController = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
     const parsed = createHabitSchema.parse(req.body);
 
     const habit = await createUserHabit(
@@ -28,59 +24,27 @@ export const createHabitController = async (
     );
 
     res.status(201).json(habit);
-  } catch (error: any) {
-    if (error instanceof ZodError) {
-      return res.status(400).json(formatZodError(error));
-    }
-    res.status(400).json({ message: error.message });
-  }
-};
+  },
+);
 
-export const getHabitsController = async (req: AuthRequest, res: Response) => {
-  try {
+export const getHabitsController = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
     const habits = await getUserHabits(req.userId!);
-
     res.status(200).json(habits);
-  } catch (error: any) {
-    if (error instanceof ZodError) {
-      return res.status(400).json(formatZodError(error));
-    }
+  },
+);
 
-    res.status(400).json({ message: error.message });
-  }
-};
-
-export const updateHabitController = async (
-  req: AuthRequest & { params: { id: string } },
-  res: Response,
-) => {
-  try {
+export const updateHabitController = asyncHandler(
+  async (req: AuthRequest & { params: { id: string } }, res: Response) => {
     const parsed = updateHabitSchema.parse(req.body);
-
     const habit = await updateUserHabit(req.params.id, req.userId!, parsed);
-
     res.json(habit);
-  } catch (error: any) {
-    if (error instanceof ZodError) {
-      return res.status(400).json(formatZodError(error));
-    }
+  },
+);
 
-    res.status(400).json({ message: error.message });
-  }
-};
-
-export const deleteHabitController = async (
-  req: AuthRequest & { params: { id: string } },
-  res: Response,
-) => {
-  try {
+export const deleteHabitController = asyncHandler(
+  async (req: AuthRequest & { params: { id: string } }, res: Response) => {
     await deleteUserHabit(req.params.id, req.userId!);
     res.status(204).send();
-  } catch (error: any) {
-    if (error instanceof ZodError) {
-      return res.status(400).json(formatZodError(error));
-    }
-
-    res.status(400).json({ message: error.message });
-  }
-};
+  },
+);

@@ -1,31 +1,22 @@
 import { Request, Response } from "express";
 import { registerUser, loginUser } from "../services/auth.service";
+import { asyncHandler } from "../utils/asyncHandler";
 
-export const register = async (req: Request, res: Response) => {
-  try {
-    const { name, email, password } = req.body;
+export const register = asyncHandler(async (req: Request, res: Response) => {
+  const { name, email, password } = req.body;
 
-    const user = await registerUser(name, email, password);
+  const user = await registerUser(name, email, password);
 
-    res.status(201).json({
-      message: "User created successfully",
-      user,
-    });
-  } catch (error: any) {
-    res.status(400).json({
-      message: error.message,
-    });
-  }
-};
+  res.status(201).json({
+    message: "User created successfully",
+    user,
+  });
+});
 
-export const login = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
+export const login = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
 
-    const result = await loginUser(email, password);
+  const result = await loginUser(email, password);
 
-    res.status(200).json(result);
-  } catch (error: any) {
-    res.status(400).json({ message: error.message });
-  }
-};
+  res.status(200).json(result);
+});
