@@ -3,8 +3,7 @@ import { Schema, model, Types } from "mongoose";
 export type HabitFrequency =
   | { type: "daily" }
   | { type: "weekly_specific_days"; daysOfWeek: number[] }
-  | { type: "weekly_times"; timesPerWeek: number }
-  | { type: "monthly" };
+  | { type: "weekly_times"; timesPerWeek: number };
 
 export interface HabitDocument {
   name: string;
@@ -23,7 +22,7 @@ const habitSchema = new Schema<HabitDocument>(
     frequency: {
       type: {
         type: String,
-        enum: ["daily", "weekly_specific_days", "weekly_times", "monthly"],
+        enum: ["daily", "weekly_specific_days", "weekly_times"],
         required: true,
       },
       daysOfWeek: {

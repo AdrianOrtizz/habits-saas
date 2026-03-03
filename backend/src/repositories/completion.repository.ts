@@ -14,3 +14,10 @@ export const findCompletionByHabitAndPeriod = async (
 ) => {
   return CompletionModel.findOne({ habitId, periodKey });
 };
+
+export const findCompletionsByUserAndPeriod = async (
+  userId: string,
+  periodKey: string,
+) => {
+  return CompletionModel.find({ userId, periodKey });
+};

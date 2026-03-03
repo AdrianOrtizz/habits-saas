@@ -21,6 +21,10 @@ export const findHabitById = async (habitId: string) => {
   return HabitModel.findById(habitId);
 };
 
+export const findHabitsByUserId = async (userId: string) => {
+  return HabitModel.find({ userId });
+};
+
 export const updateHabit = async (
   habitId: string,
   data: Partial<{ name: string; frequency: HabitFrequency }>,

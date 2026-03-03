@@ -5,10 +5,6 @@ const dailySchema = z.object({
   type: z.literal("daily"),
 });
 
-const monthlySchema = z.object({
-  type: z.literal("monthly"),
-});
-
 const weeklySpecificDaysSchema = z.object({
   type: z.literal("weekly_specific_days"),
   daysOfWeek: z
@@ -23,7 +19,6 @@ const weeklyTimesSchema = z.object({
 
 export const frequencySchema = z.discriminatedUnion("type", [
   dailySchema,
-  monthlySchema,
   weeklySpecificDaysSchema,
   weeklyTimesSchema,
 ]);
