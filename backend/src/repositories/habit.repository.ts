@@ -21,8 +21,8 @@ export const findHabitById = async (habitId: string) => {
   return HabitModel.findById(habitId);
 };
 
-export const findHabitsByUserId = async (userId: string) => {
-  return HabitModel.find({ userId });
+export const findActiveHabitsByUserId = async (userId: string) => {
+  return HabitModel.find({ userId, isActive: true });
 };
 
 export const updateHabit = async (

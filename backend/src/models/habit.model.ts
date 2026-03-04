@@ -10,6 +10,7 @@ export interface HabitDocument {
   frequency: HabitFrequency;
   userId: Types.ObjectId;
   createdAt: Date;
+  isActive: boolean;
 }
 
 const habitSchema = new Schema<HabitDocument>(
@@ -56,6 +57,10 @@ const habitSchema = new Schema<HabitDocument>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true },

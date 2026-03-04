@@ -21,3 +21,14 @@ export const findCompletionsByUserAndPeriod = async (
 ) => {
   return CompletionModel.find({ userId, periodKey });
 };
+
+export const findCompletionsForWeek = async (
+  userId: string,
+  start: Date,
+  end: Date,
+) => {
+  return CompletionModel.find({
+    userId,
+    createdAt: { $gte: start, $lte: end },
+  });
+};
