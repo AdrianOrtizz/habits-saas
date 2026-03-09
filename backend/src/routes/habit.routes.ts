@@ -4,6 +4,7 @@ import {
   createHabitController,
   updateHabitController,
   deleteHabitController,
+  deleteAllHabitsController,
 } from "../controllers/habit.controller";
 import {
   completeHabitController,
@@ -20,6 +21,7 @@ router.get("/:id/status", getHabitStatusController);
 
 router.put("/:id", updateHabitController);
 
+router.delete("/all", deleteAllHabitsController);
 router.delete("/:id", deleteHabitController);
 
 export default router;

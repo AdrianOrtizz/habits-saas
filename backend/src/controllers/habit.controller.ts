@@ -7,6 +7,7 @@ import {
   getUserHabits,
   updateUserHabit,
   deleteUserHabit,
+  wipeUserHabitsData,
 } from "../services/habit.service";
 
 import { createHabitSchema, updateHabitSchema } from "../schemas/habit.schema";
@@ -19,7 +20,7 @@ export const createHabitController = asyncHandler(
 
     const habit = await createUserHabit(
       parsed.name,
-      parsed.frequency,
+      parsed.frequency as any,
       req.userId!,
     );
 
@@ -30,7 +31,11 @@ export const createHabitController = asyncHandler(
 export const updateHabitController = asyncHandler(
   async (req: AuthRequest & { params: { id: string } }, res: Response) => {
     const parsed = updateHabitSchema.parse(req.body);
-    const habit = await updateUserHabit(req.params.id, req.userId!, parsed);
+    const habit = await updateUserHabit(
+      req.params.id,
+      req.userId!,
+      parsed as any,
+    );
     res.json(habit);
   },
 );
@@ -39,5 +44,14 @@ export const deleteHabitController = asyncHandler(
   async (req: AuthRequest & { params: { id: string } }, res: Response) => {
     await deleteUserHabit(req.params.id, req.userId!);
     res.status(204).send();
+  },
+);
+
+export const deleteAllHabitsController = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    const userId = req.userId!;
+    const result = await wipeUserHabitsData(userId);
+
+    return res.status(200).json(result);
   },
 );

@@ -4,7 +4,10 @@ import {
   findHabitById,
   updateHabit,
   deleteHabit,
+  deleteAllHabitsByUserId,
 } from "../repositories/habit.repository";
+
+import { deleteAllCompletionsByUserId } from "../repositories/completion.repository";
 
 import { HabitFrequency } from "../models/habit.model";
 
@@ -43,4 +46,13 @@ export const deleteUserHabit = async (habitId: string, userId: string) => {
   }
 
   return deleteHabit(habitId);
+};
+
+export const wipeUserHabitsData = async (userId: string) => {
+  await Promise.all([
+    deleteAllHabitsByUserId(userId),
+    deleteAllCompletionsByUserId(userId),
+  ]);
+
+  return { message: "All habits and completions cleared successfully" };
 };

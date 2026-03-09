@@ -79,7 +79,7 @@ export const buildWeeklyTimesSteps = (
   habit: any,
   completionsCount: number,
 ): HabitStep[] => {
-  const target = habit.frequency.count;
+  const target = habit.frequency.timesPerWeek;
 
   const steps: HabitStep[] = [];
 
