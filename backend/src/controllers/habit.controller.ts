@@ -19,7 +19,7 @@ export const createHabitController = asyncHandler(
 
     const habit = await createUserHabit(
       parsed.name,
-      parsed.frequency,
+      parsed.frequency as any,
       req.userId!,
     );
 
@@ -30,7 +30,11 @@ export const createHabitController = asyncHandler(
 export const updateHabitController = asyncHandler(
   async (req: AuthRequest & { params: { id: string } }, res: Response) => {
     const parsed = updateHabitSchema.parse(req.body);
-    const habit = await updateUserHabit(req.params.id, req.userId!, parsed);
+    const habit = await updateUserHabit(
+      req.params.id,
+      req.userId!,
+      parsed as any,
+    );
     res.json(habit);
   },
 );

@@ -32,3 +32,10 @@ export const findCompletionsForWeek = async (
     createdAt: { $gte: start, $lte: end },
   });
 };
+
+export const findHabitCompletions = async (userId: string, habitId: string) => {
+  return CompletionModel.find({
+    userId,
+    habitId,
+  }).sort({ createdAt: -1 });
+};
