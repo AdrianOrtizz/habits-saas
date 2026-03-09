@@ -14,7 +14,6 @@ export const getHabitStreak = async (userId: string, habitId: string) => {
 
   const completions = await findHabitCompletions(userId, habitId);
 
-  // Justificación: Extraemos los periodKey que ya están normalizados en la DB
   const completionKeys = completions.map((c) => c.periodKey);
   const today = new Date().toISOString().split("T")[0];
 

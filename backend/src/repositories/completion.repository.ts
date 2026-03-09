@@ -43,3 +43,7 @@ export const findHabitCompletions = async (userId: string, habitId: string) => {
 export const deleteAllCompletionsByUserId = async (userId: string) => {
   return CompletionModel.deleteMany({ userId });
 };
+
+export const findCompletionsByUser = async (userId: string) => {
+  return CompletionModel.find({ userId }).select("habitId periodKey").lean();
+};

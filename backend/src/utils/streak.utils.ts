@@ -13,14 +13,11 @@ export const calculateDailyStreak = (
 ): number => {
   if (!completionDates.length) return 0;
 
-  // Justificación A: Usar strings ISO directamente es más rápido que instanciar Date()
   const sortedDates = [...new Set(completionDates)].sort().reverse();
 
   const lastCompletion = sortedDates[0];
   const diffInDays = getDiffInDays(today, lastCompletion);
 
-  // Justificación B: Si la última vez fue hace más de 1 día (ayer), la racha se rompió.
-  // Si fue ayer o es hoy, la racha sigue viva.
   if (diffInDays > 1) return 0;
 
   let streak = 1;
