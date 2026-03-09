@@ -39,3 +39,7 @@ export const findHabitCompletions = async (userId: string, habitId: string) => {
     habitId,
   }).sort({ createdAt: -1 });
 };
+
+export const deleteAllCompletionsByUserId = async (userId: string) => {
+  return CompletionModel.deleteMany({ userId });
+};

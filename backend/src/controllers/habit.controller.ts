@@ -7,6 +7,7 @@ import {
   getUserHabits,
   updateUserHabit,
   deleteUserHabit,
+  wipeUserHabitsData,
 } from "../services/habit.service";
 
 import { createHabitSchema, updateHabitSchema } from "../schemas/habit.schema";
@@ -43,5 +44,14 @@ export const deleteHabitController = asyncHandler(
   async (req: AuthRequest & { params: { id: string } }, res: Response) => {
     await deleteUserHabit(req.params.id, req.userId!);
     res.status(204).send();
+  },
+);
+
+export const deleteAllHabitsController = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    const userId = req.userId!;
+    const result = await wipeUserHabitsData(userId);
+
+    return res.status(200).json(result);
   },
 );

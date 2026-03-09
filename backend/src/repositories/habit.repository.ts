@@ -35,3 +35,7 @@ export const updateHabit = async (
 export const deleteHabit = async (habitId: string) => {
   return HabitModel.findByIdAndDelete(habitId);
 };
+
+export const deleteAllHabitsByUserId = async (userId: string) => {
+  return HabitModel.deleteMany({ userId });
+};
