@@ -1,9 +1,8 @@
-type StepStatus = "done" | "pending" | "missed";
-
-export type HabitStep = {
-  status: StepStatus;
-  label?: string;
-};
+import {
+  DashboardHabit,
+  HabitStep,
+  StepStatus,
+} from "../types/dashboard.types";
 
 const WEEKDAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
@@ -42,11 +41,10 @@ export const buildSpecificDaysSteps = (
 ): HabitStep[] => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
   const steps: HabitStep[] = [];
 
   weekDates.forEach((date) => {
-    const jsDay = date.getDay(); // 0 domingo
+    const jsDay = date.getDay();
     const mondayBased = jsDay === 0 ? 6 : jsDay - 1;
 
     if (!habit.frequency.daysOfWeek.includes(mondayBased)) {
@@ -76,7 +74,7 @@ export const buildSpecificDaysSteps = (
 };
 
 export const buildWeeklyTimesSteps = (
-  habit: any,
+  habit: DashboardHabit,
   completionsCount: number,
 ): HabitStep[] => {
   const target = habit.frequency.timesPerWeek;
