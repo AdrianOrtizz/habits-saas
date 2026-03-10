@@ -1,5 +1,5 @@
-import { HabitDocument } from "../models/habit.model";
 import { getWeekKey } from "./getDays";
+import { DashboardHabit } from "../types/dashboard.types";
 
 const getDiffInDays = (dateStr1: string, dateStr2: string) => {
   const d1 = new Date(dateStr1).getTime();
@@ -35,9 +35,9 @@ export const calculateDailyStreak = (
 };
 
 export const calculateWeeklyStreak = (
-  habit: HabitDocument,
-  completionDates: string[], // "YYYY-MM-DD"
-  currentWeekKey: string, // "YYYY-Wxx"
+  habit: DashboardHabit,
+  completionDates: string[],
+  currentWeekKey: string,
 ): number => {
   const weeks = new Map<string, number>();
 
