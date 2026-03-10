@@ -41,8 +41,16 @@ export const calculateWeeklyStreak = (
 ): number => {
   const weeks = new Map<string, number>();
 
-  completionDates.forEach((date) => {
-    const weekKey = getWeekKey(new Date(date));
+  completionDates.forEach((key) => {
+    let weekKey: string;
+
+    if (key.includes("-W")) {
+      const parts = key.split("-");
+      weekKey = `${parts[0]}-${parts[1]}`;
+    } else {
+      weekKey = getWeekKey(new Date(key));
+    }
+
     weeks.set(weekKey, (weeks.get(weekKey) || 0) + 1);
   });
 
@@ -53,6 +61,7 @@ export const calculateWeeklyStreak = (
   let streak = 0;
   for (const weekKey of sortedWeeks) {
     const count = weeks.get(weekKey) || 0;
+
     if (count >= (habit.frequency.timesPerWeek || 0)) {
       streak++;
     } else if (weekKey !== currentWeekKey) {
