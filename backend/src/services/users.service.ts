@@ -1,10 +1,11 @@
 import { findUserById } from "../repositories/user.repository";
+import { NotFoundError } from "../utils/errorsHandler";
 
 export const getCurrentUser = async (userId: string) => {
   const user = await findUserById(userId);
 
   if (!user) {
-    throw new Error("User not found");
+    throw new NotFoundError("Usuario no encontrado");
   }
 
   return {

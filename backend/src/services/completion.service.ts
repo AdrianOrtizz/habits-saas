@@ -4,20 +4,21 @@ import {
 } from "../repositories/completion.repository";
 import { findHabitById } from "../repositories/habit.repository";
 import { getCurrentPeriodKey } from "../utils/getCurrentPeriodKey";
+import {
+  NotFoundError,
+  ForbiddenError,
+  BadRequestError,
+} from "../utils/errorsHandler";
 
 export const completeHabit = async (habitId: string, userId: string) => {
   const habit = await findHabitById(habitId);
 
   if (!habit) {
-    const error = new Error("Habit not found");
-    error.name = "NotFound";
-    throw error;
+    throw new NotFoundError("El hábito no existe");
   }
 
   if (habit.userId.toString() !== userId) {
-    const error = new Error("Forbidden");
-    error.name = "Forbidden";
-    throw error;
+    throw new ForbiddenError("No tienes permiso para completar este hábito");
   }
 
   const periodKey = getCurrentPeriodKey(habit.frequency.type);
@@ -32,11 +33,9 @@ export const completeHabit = async (habitId: string, userId: string) => {
     return completion;
   } catch (err: any) {
     if (err.code === 11000) {
-      const error = new Error(
+      throw new BadRequestError(
         "No podés completar este hábito más de una vez en el mismo período.",
       );
-      error.name = "DuplicateCompletion";
-      throw error;
     }
 
     throw err;
@@ -47,15 +46,11 @@ export const getHabitStatus = async (habitId: string, userId: string) => {
   const habit = await findHabitById(habitId);
 
   if (!habit) {
-    const error = new Error("Habit not found");
-    error.name = "NotFound";
-    throw error;
+    throw new NotFoundError("El hábito no existe");
   }
 
   if (habit.userId.toString() !== userId) {
-    const error = new Error("Forbidden");
-    error.name = "Forbidden";
-    throw error;
+    throw new ForbiddenError("No tienes permiso para ver este hábito");
   }
 
   const periodKey = getCurrentPeriodKey(habit.frequency.type);

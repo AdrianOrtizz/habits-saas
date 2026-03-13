@@ -5,11 +5,17 @@ import {
 } from "../utils/streak.utils";
 import { findHabitById } from "../repositories/habit.repository";
 import { getWeekKey } from "../utils/getDays";
+import { NotFoundError, ForbiddenError } from "../utils/errorsHandler";
 
 export const getHabitStreak = async (userId: string, habitId: string) => {
   const habit = await findHabitById(habitId);
+
   if (!habit) {
-    throw new Error("Habit not found");
+    throw new NotFoundError("El hábito no existe");
+  }
+
+  if (habit.userId.toString() !== userId) {
+    throw new ForbiddenError("No tienes permiso para ver esta racha");
   }
 
   const completions = await findHabitCompletions(userId, habitId);
@@ -22,7 +28,11 @@ export const getHabitStreak = async (userId: string, habitId: string) => {
     streak = calculateDailyStreak(completionKeys, today);
   } else {
     const currentWeekKey = getWeekKey(new Date());
-    streak = calculateWeeklyStreak(habit, completionKeys, currentWeekKey);
+    streak = calculateWeeklyStreak(
+      habit as any,
+      completionKeys,
+      currentWeekKey,
+    );
   }
 
   return { habitId, streak };

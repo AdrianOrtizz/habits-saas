@@ -8,8 +8,8 @@ import {
 } from "../repositories/habit.repository";
 
 import { deleteAllCompletionsByUserId } from "../repositories/completion.repository";
-
 import { HabitFrequency } from "../models/habit.model";
+import { NotFoundError, ForbiddenError } from "../utils/errorsHandler";
 
 export const createUserHabit = async (
   name: string,
@@ -30,19 +30,26 @@ export const updateUserHabit = async (
 ) => {
   const habit = await findHabitById(habitId);
 
-  if (!habit) throw new Error("Habit not found");
-  if (habit.userId.toString() !== userId) {
-    throw new Error("Unauthorized");
+  if (!habit) {
+    throw new NotFoundError("El hábito no existe");
   }
+
+  if (habit.userId.toString() !== userId) {
+    throw new ForbiddenError("No tienes permiso para editar este hábito");
+  }
+
   return updateHabit(habitId, data);
 };
 
 export const deleteUserHabit = async (habitId: string, userId: string) => {
   const habit = await findHabitById(habitId);
 
-  if (!habit) throw new Error("Habit not found");
+  if (!habit) {
+    throw new NotFoundError("El hábito no existe");
+  }
+
   if (habit.userId.toString() !== userId) {
-    throw new Error("Unauthorized");
+    throw new ForbiddenError("No tienes permiso para eliminar este hábito");
   }
 
   return deleteHabit(habitId);
@@ -54,5 +61,7 @@ export const wipeUserHabitsData = async (userId: string) => {
     deleteAllCompletionsByUserId(userId),
   ]);
 
-  return { message: "All habits and completions cleared successfully" };
+  return {
+    message: "Todos los hábitos y progresos han sido eliminados correctamente",
+  };
 };
