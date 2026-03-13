@@ -29,7 +29,7 @@ export const getDashboard = async (userId: string) => {
 
   const completionsMap = groupCompletionsByHabit(allCompletions);
 
-  const dashboardHabits = habits.map((h) =>
+  const dashboardHabits = habits.map((h: any) =>
     mapHabitToDashboard(h, completionsMap.get(h._id.toString()) || [], context),
   );
 

@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { createUser, findUserByEmail } from "../repositories/user.repository";
 import { generateToken } from "../utils/jwt";
+import { ConflictError, UnauthorizedError } from "../utils/errorsHandler";
 
 const SALT_ROUNDS = 10;
 
@@ -12,9 +13,7 @@ export const registerUser = async (
   const existingUser = await findUserByEmail(email);
 
   if (existingUser) {
-    const error = new Error("User already exists");
-    error.name = "User already exists";
-    throw error;
+    throw new ConflictError("El correo electrónico ya está registrado");
   }
 
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -25,24 +24,24 @@ export const registerUser = async (
     password: hashedPassword,
   });
 
-  return user;
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  };
 };
 
 export const loginUser = async (email: string, password: string) => {
   const user = await findUserByEmail(email);
 
   if (!user) {
-    const error = new Error("Invalid credentials");
-    error.name = "Invalid credentials";
-    throw error;
+    throw new UnauthorizedError("Credenciales inválidas");
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    const error = new Error("Invalid credentials");
-    error.name = "Invalid credentials";
-    throw error;
+    throw new UnauthorizedError("Credenciales inválidas");
   }
 
   const token = generateToken(user.id);
