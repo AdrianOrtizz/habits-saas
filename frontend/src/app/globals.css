@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #63d392;
+  --color-main-bg: #f9fbfb;
+  --radius-layout: 12px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-main-bg);
+    color: #333;
+  }
+}
+
+.ant-menu-item-selected {
+  background-color: rgba(99, 211, 146, 0.1) !important;
+  color: var(--primary-color) !important;
+}
