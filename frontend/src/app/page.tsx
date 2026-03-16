@@ -1,5 +1,6 @@
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import WeeklyProgress from "@/components/dashboard/WeeklyProgess";
 
 export default function HomePage() {
   return (
@@ -7,10 +8,8 @@ export default function HomePage() {
       <DashboardHeader />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          <div className="bg-primary p-10 rounded-layout text-white">
-            <p>Próximamente: LevelCard</p>
-          </div>
+        <div className="lg:col-span-3 space-y-8">
+          <WeeklyProgress />
         </div>
 
         <div className="space-y-6">
