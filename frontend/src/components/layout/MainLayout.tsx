@@ -9,6 +9,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
         theme="light"
         width={260}
         style={{
@@ -37,8 +39,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </Sider>
 
-      <Layout style={{ marginLeft: 260 }}>
-        <Content className="bg-[#f9fbfb] p-8">
+      <Layout className="transition-all duration-300 lg:ml-[260px]">
+        <Content className="bg-main-bg p-4 md:p-8">
           <div className="max-w-6xl mx-auto">{children}</div>
         </Content>
       </Layout>
