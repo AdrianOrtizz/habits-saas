@@ -1,6 +1,8 @@
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import WeeklyProgress from "@/components/dashboard/WeeklyProgess";
+import WeeklyProgress from "@/components/dashboard/WeeklyProgress";
+import DaysSelector from "@/components/dashboard/DaysSelector";
+import HabitList from "@/components/dashboard/habitList/HabitList";
 
 export default function HomePage() {
   return (
@@ -11,11 +13,9 @@ export default function HomePage() {
         <div className="lg:col-span-3 space-y-8">
           <WeeklyProgress />
         </div>
-
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-layout shadow-sm border border-gray-100">
-            <p>Próximamente: Resumen Semanal</p>
-          </div>
+        <div className="col-span-2">
+          <DaysSelector />
+          <HabitList />
         </div>
       </div>
     </MainLayout>
