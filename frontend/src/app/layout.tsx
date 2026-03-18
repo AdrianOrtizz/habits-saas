@@ -4,12 +4,23 @@ import QueryProvider from "@/providers/QueryProvider";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 
+import { Inter, Open_Sans } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 const theme = {
   token: {
     colorPrimary: "#63d392",
     borderRadius: 12,
     colorBgContainer: "#ffffff",
-    fontFamily: "Inter, sans-serif",
   },
   components: {
     Button: {
@@ -25,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={openSans.className}>
       <body>
         <AntdRegistry>
           <ConfigProvider theme={theme}>

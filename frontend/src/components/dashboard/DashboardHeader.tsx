@@ -17,17 +17,15 @@ const DashboardHeader = () => {
       </div>
 
       <Space size="middle">
-        <Button
-          icon={<SlidersHorizontal size={16} />}
-          className="flex items-center gap-2 border-none bg-white shadow-sm hover:text-primary"
-        >
+        <Button className="flex items-center gap-2 !p-5 border-none bg-white shadow-sm hover:text-primary">
+          <SlidersHorizontal size={16} />
           Filtrar hábitos
         </Button>
         <Button
           type="primary"
-          icon={<Plus size={18} />}
-          className="flex items-center gap-1 h-10 px-6 shadow-md shadow-emerald-100"
+          className="flex items-center gap-1  h-10 !p-5 !font-bold shadow-md shadow-emerald-100"
         >
+          <Plus size={18} />
           Crear nuevo hábito
         </Button>
       </Space>
