@@ -1,6 +1,6 @@
 "use client";
 import { Check, Smile } from "lucide-react";
-import { Typography, Tag } from "antd";
+import { Typography } from "antd";
 
 const { Text } = Typography;
 
