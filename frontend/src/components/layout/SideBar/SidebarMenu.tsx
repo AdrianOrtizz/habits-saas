@@ -14,7 +14,7 @@ export const SidebarMenu = () => {
       label: "Hábitos",
     },
     {
-      key: "/objetivos",
+      key: "/goals",
       icon: <Target size={20} />,
       label: "Objetivos",
     },
