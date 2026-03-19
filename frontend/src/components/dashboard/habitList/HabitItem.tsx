@@ -24,6 +24,14 @@ const HabitItem = ({ habit }: { habit: any }) => {
               type="secondary"
               className="text-[10px] md:text-xs flex items-center gap-1"
             >
+              Progreso semanal: {habit.progress.completed} /{" "}
+              {habit.progress.target}
+            </Text>
+
+            <Text
+              type="secondary"
+              className="text-[10px] md:text-xs flex items-center gap-1"
+            >
               🔥 {habit.streak} días seguidos
             </Text>
           </div>
