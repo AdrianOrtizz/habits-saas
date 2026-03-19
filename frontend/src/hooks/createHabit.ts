@@ -1,4 +1,5 @@
 import { Form } from "antd";
+import { CreateHabit } from "../types/habits.types";
 
 export const createHabitHandler = (onClose: () => void) => {
   const [form] = Form.useForm();
@@ -19,25 +20,24 @@ export const createHabitHandler = (onClose: () => void) => {
     try {
       const values = await form.validateFields();
 
-      let finalHabit = {
+      let finalHabit: CreateHabit = {
         name: values.name,
         frequency: {
           type: values.frequency.type,
           timesPerWeek: 0,
-          daysOfWeek: [],
         },
       };
 
-      if (values.frequency.type === "daily") {
+      if (finalHabit.frequency.type === "daily") {
         finalHabit.frequency.timesPerWeek = 7;
-      } else if (values.frequency.type === "weekly_specific_days") {
+      } else if (finalHabit.frequency.type === "weekly_times") {
+        finalHabit.frequency.timesPerWeek = values.frequency.timesPerWeek;
+      } else if (finalHabit.frequency.type === "weekly_specific_days") {
         finalHabit.frequency = {
           ...finalHabit.frequency,
-          daysOfWeek: values.frequency.daysOfWeek,
           timesPerWeek: values.frequency.daysOfWeek.length,
+          daysOfWeek: values.frequency.daysOfWeek,
         };
-      } else if (values.frequency.type === "weekly_times") {
-        finalHabit.frequency.timesPerWeek = values.frequency.timesPerWeek;
       }
 
       console.log("Hábito creado:", finalHabit);
