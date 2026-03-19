@@ -25,7 +25,7 @@ const WeeklyProgress = () => {
         <div className="flex-2">
           <Title
             level={4}
-            className="!text-white !text-xl md:!text-2xl !m-0 mb-1"
+            className="!text-white !text-xl md:!text-3xl !font-bold !m-0 mb-1"
           >
             Progreso Semanal
           </Title>
@@ -40,7 +40,6 @@ const WeeklyProgress = () => {
             strokeColor="#ffffff"
             railColor="rgba(255,255,255,0.2)"
             showInfo={false}
-            stroke-width={10}
             className="m-0"
           />
           <div className="flex justify-end mt-1">

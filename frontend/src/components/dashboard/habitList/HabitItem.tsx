@@ -1,6 +1,6 @@
 "use client";
 import { Check, Smile } from "lucide-react";
-import { Typography, Tag } from "antd";
+import { Typography } from "antd";
 
 const { Text } = Typography;
 
@@ -20,6 +20,14 @@ const HabitItem = ({ habit }: { habit: any }) => {
             {habit.name}
           </Text>
           <div className="flex items-center gap-2">
+            <Text
+              type="secondary"
+              className="text-[10px] md:text-xs flex items-center gap-1"
+            >
+              Progreso semanal: {habit.progress.completed} /{" "}
+              {habit.progress.target}
+            </Text>
+
             <Text
               type="secondary"
               className="text-[10px] md:text-xs flex items-center gap-1"
