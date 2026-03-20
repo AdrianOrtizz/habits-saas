@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button, Typography, Space } from "antd";
 import { SlidersHorizontal, Plus } from "lucide-react";
-import CreateHabitModal from "./modals/CreateHabitModal";
+import CreateHabitModal from "../modals/CreateHabitModal";
 
 const { Title, Text } = Typography;
 

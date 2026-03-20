@@ -1,10 +1,16 @@
 "use client";
+
+import { useState } from "react";
+
 import { Button, Typography, Space } from "antd";
 import { Copy, Plus } from "lucide-react";
-
 const { Title, Text } = Typography;
 
+import CreateGoalModal from "../modals/CreateGoalModal";
+
 const GoalsHeader = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
       <div>
@@ -26,11 +32,18 @@ const GoalsHeader = () => {
         <Button
           type="primary"
           icon={<Plus size={18} />}
+          onClick={() => setIsModalOpen(true)}
           className="bg-primary hover:!bg-primary/90 h-10 px-6 shadow-md rounded-layout font-medium"
         >
           Crear nuevo objetivo
         </Button>
       </Space>
+
+      <CreateGoalModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        // onCreate={handleCreateGoal}
+      />
     </div>
   );
 };
