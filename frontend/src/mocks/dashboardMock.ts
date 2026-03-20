@@ -12,7 +12,7 @@ export const dashboardMock = {
     {
       id: "69b04203e5fd12310429d8d0bce7",
       name: "Meditar 30 minutos",
-      //   icon: "smile",
+      icon: "Smile",
       frequency: {
         type: "weekly_times",
         timesPerWeek: 3,
@@ -41,7 +41,7 @@ export const dashboardMock = {
     {
       id: "69b04210e5awdadawfd0429d8d0bce9",
       name: "Leer 20 minutos",
-      //   icon: "book-open",
+      icon: "BookOpen",
       frequency: {
         type: "daily",
         daysOfWeek: [],
@@ -86,7 +86,7 @@ export const dashboardMock = {
     {
       id: "69b04210e5fd0429asdad8d0bce9",
       name: "Hacer ejercicio",
-      //   icon: "biceps-flexed",
+      icon: "Dumbbell",
       frequency: {
         type: "daily",
         daysOfWeek: [],
@@ -131,7 +131,7 @@ export const dashboardMock = {
     {
       id: "69b04211242150e5fd0429d8d0bce9",
       name: "Tomar Agua",
-      //   icon: "glass-water",
+      icon: "Droplets",
       frequency: {
         type: "daily",
         daysOfWeek: [],

@@ -22,6 +22,7 @@ export const createHabitHandler = (onClose: () => void) => {
 
       let finalHabit: CreateHabit = {
         name: values.name,
+        icon: values.icon,
         frequency: {
           type: values.frequency.type,
           timesPerWeek: 0,

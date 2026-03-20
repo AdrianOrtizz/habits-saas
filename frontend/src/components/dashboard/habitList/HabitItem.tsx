@@ -1,6 +1,8 @@
 "use client";
-import { Check, Smile } from "lucide-react";
+import { Check } from "lucide-react";
 import { Typography } from "antd";
+
+import IconDisplay from "@/components/common/IconDisplay";
 
 const { Text } = Typography;
 
@@ -8,8 +10,8 @@ const HabitItem = ({ habit }: { habit: any }) => {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group">
       <div className="flex items-center gap-4 min-w-0">
-        <div className="w-10 h-10 rounded-lg flex items-center justify-center transition-colors bg-emerald-50 text-primary">
-          <Smile size={20} />
+        <div className="w-12 h-12 rounded-lg flex items-center justify-center transition-colors bg-primary/30  text-primary">
+          <IconDisplay iconName={habit.icon} size={26} strokeWidth={2} />
         </div>
 
         <div className="flex flex-col min-w-0">

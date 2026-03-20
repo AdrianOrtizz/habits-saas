@@ -1,5 +1,5 @@
 "use client";
-import { Form, Input, Button, Typography, Card, Divider, Checkbox } from "antd";
+import { Form, Input, Button, Typography, Card, Checkbox } from "antd";
 import { Mail, Lock, User, ArrowRight, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
@@ -9,10 +9,8 @@ const RegisterPage = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    // Eliminamos confirmPassword antes de enviar al backend
     const { confirmPassword, ...registerData } = values;
     console.log("Datos para el registro en NestJS:", registerData);
-    // Próximamente: Mutation de TanStack Query para POST /auth/register
   };
 
   return (

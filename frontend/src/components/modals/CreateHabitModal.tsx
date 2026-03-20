@@ -3,6 +3,8 @@ import { Modal, Form, Input, Select, Checkbox } from "antd";
 
 import { createHabitHandler } from "@/hooks/createHabit";
 
+import IconPicker from "@/components/common/IconPicker";
+
 interface CreateHabitModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -40,6 +42,16 @@ const CreateHabitModal = ({
           rules={[{ required: true, message: "Ponéle un nombre a tu hábito" }]}
         >
           <Input placeholder="Ej: Entrenar, Meditar, Leer..." />
+        </Form.Item>
+
+        <Form.Item
+          name="icon"
+          label="Elegí un icono representativo"
+          rules={[
+            { required: true, message: "¡Dale un estilo visual a tu hábito!" },
+          ]}
+        >
+          <IconPicker />
         </Form.Item>
 
         <Form.Item name={["frequency", "type"]} label="Frecuencia">
