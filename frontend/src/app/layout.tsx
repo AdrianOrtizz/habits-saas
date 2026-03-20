@@ -1,6 +1,8 @@
 import "./globals.css";
 
 import QueryProvider from "@/providers/QueryProvider";
+import AuthProvider from "@/providers/AuthContext";
+
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 
@@ -35,7 +37,9 @@ export default function RootLayout({
       <body>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </QueryProvider>
           </ConfigProvider>
         </AntdRegistry>
       </body>
