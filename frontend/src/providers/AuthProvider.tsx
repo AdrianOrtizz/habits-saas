@@ -1,31 +1,42 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
+import api from "@/api/axios";
 
 import { User } from "@/types/auth.types";
 
 interface AuthContextType {
   user: User | null;
-  login: (data: any) => void;
+  login: (authData: { user: any; access_token: string }) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState(null);
+const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("habitzz_token");
-    if (token) {
-      const savedUser = localStorage.getItem("habitzz_user");
-      if (savedUser) setUser(JSON.parse(savedUser));
+    const savedUser = localStorage.getItem("habitzz_user");
+
+    if (token && savedUser) {
+      setUser(JSON.parse(savedUser));
     }
+    setIsLoading(false);
   }, []);
 
-  const login = (authData: any) => {
+  const login = (authData: { user: any; access_token: string }) => {
     localStorage.setItem("habitzz_token", authData.access_token);
     localStorage.setItem("habitzz_user", JSON.stringify(authData.user));
     setUser(authData.user);
@@ -41,7 +52,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, isAuthenticated: !!user }}
+      value={{
+        user,
+        login,
+        logout,
+        isAuthenticated: !!user,
+        isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>
