@@ -1,9 +1,8 @@
 "use client";
 import { Flex, Typography } from "antd";
 import GoalItem from "./GoalsItem";
-import * as LucideIcons from "lucide-react";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const GOALS_MOCK = [
   {
@@ -43,13 +42,6 @@ const GoalList = () => {
         >
           Lista de objetivos
         </Title>
-        <Text
-          type="secondary"
-          className="text-xs text-gray-400 flex items-center gap-1.5"
-        >
-          <LucideIcons.CheckCircle2 size={14} className="text-emerald-400" />
-          Los completados aparecen mezclados con la lista
-        </Text>
       </Flex>
 
       <div className="space-y-4">

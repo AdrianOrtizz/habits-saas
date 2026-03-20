@@ -27,7 +27,7 @@ const DashboardHeader = () => {
         </Button>
         <Button
           type="primary"
-          className="flex items-center gap-1  h-10 !p-5 !font-bold shadow-md shadow-emerald-100"
+          className="flex items-center gap-1 h-10 !p-5 !font-bold shadow-md shadow-emerald-100"
           onClick={() => setIsModalOpen(true)}
         >
           <Plus size={18} />

@@ -23,18 +23,16 @@ const GoalsHeader = () => {
       </div>
 
       <Space size="middle" className="flex-wrap">
-        <Button
-          icon={<Copy size={16} />}
-          className="border-gray-200 hover:border-primary/50 text-gray-700 bg-white shadow-sm h-10 px-5 rounded-layout"
-        >
+        <Button className="flex items-center gap-2 !p-5 border-none bg-white shadow-sm hover:text-primary">
+          <Copy size={16} />
           Repetir los objetivos de la semana pasada
         </Button>
         <Button
           type="primary"
-          icon={<Plus size={18} />}
           onClick={() => setIsModalOpen(true)}
-          className="bg-primary hover:!bg-primary/90 h-10 px-6 shadow-md rounded-layout font-medium"
+          className="flex items-center gap-1 h-10 !p-5 !font-bold shadow-md shadow-emerald-100"
         >
+          <Plus size={18} />
           Crear nuevo objetivo
         </Button>
       </Space>
