@@ -24,5 +24,6 @@ export type DashboardHabit = {
 
 export interface CreateHabit {
   name: string;
+  icon: string;
   frequency: HabitFrequency;
 }
