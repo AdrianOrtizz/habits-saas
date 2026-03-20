@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { Modal, Form, Input, Typography, Divider } from "antd";
 import { Target } from "lucide-react";
 import IconPicker from "@/components/common/IconPicker";
