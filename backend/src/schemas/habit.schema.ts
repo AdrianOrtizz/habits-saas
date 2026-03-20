@@ -30,6 +30,7 @@ export const frequencySchema = z.discriminatedUnion("type", [
 
 export const createHabitSchema = z.object({
   name: z.string().min(1, "Habit name is required"),
+  icon: z.string().min(1, "Habit icon is required"),
   frequency: frequencySchema,
 });
 

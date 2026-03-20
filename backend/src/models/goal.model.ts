@@ -3,6 +3,7 @@ import { Schema, model, Types } from "mongoose";
 export interface GoalDocument {
   userId: Types.ObjectId;
   name: string;
+  icon: string;
   weekKey: string;
   completed: boolean;
   createdAt: Date;
@@ -18,6 +19,11 @@ const GoalSchema = new Schema<GoalDocument>(
       required: true,
     },
     name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    icon: {
       type: String,
       required: true,
       trim: true,

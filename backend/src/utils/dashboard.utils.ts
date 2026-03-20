@@ -38,6 +38,7 @@ export const mapHabitToDashboard = (
   return {
     id: habitId,
     name: habit.name,
+    icon: habit.icon,
     frequency: habit.frequency,
     streak,
     progress: {

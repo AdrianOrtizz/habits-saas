@@ -18,6 +18,7 @@ export type Context = {
 export type DashboardHabit = {
   _id: string;
   name: string;
+  icon: string;
   frequency: HabitFrequency;
   streak: number;
   progress: {

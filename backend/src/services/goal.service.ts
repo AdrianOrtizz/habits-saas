@@ -13,6 +13,7 @@ import { NotFoundError, BadRequestError } from "../utils/errorsHandler";
 const mapGoal = (g: any) => ({
   id: g._id,
   name: g.name,
+  icon: g.icon,
   completed: g.completed,
 });
 
@@ -22,12 +23,17 @@ export const getGoalsForCurrentWeek = async (userId: string) => {
   return currentGoals.map(mapGoal);
 };
 
-export const createGoal = async (userId: string, name: string) => {
+export const createGoal = async (
+  userId: string,
+  name: string,
+  icon: string,
+) => {
   const currentWeekKey = getWeekKey();
 
   const goalData: GoalCreate = {
     userId: new Types.ObjectId(userId),
     name,
+    icon,
     weekKey: currentWeekKey,
   };
 
@@ -90,6 +96,7 @@ export const cloneLastWeekGoals = async (userId: string) => {
   const goalsToInsert: GoalCreate[] = lastGoals.map((g) => ({
     userId: new Types.ObjectId(userId),
     name: g.name,
+    icon: g.icon,
     weekKey: currentWeekKey,
   }));
 

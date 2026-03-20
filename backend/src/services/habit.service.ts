@@ -15,8 +15,9 @@ export const createUserHabit = async (
   name: string,
   frequency: HabitFrequency,
   userId: string,
+  icon: string,
 ) => {
-  return createHabit(name, frequency, userId);
+  return createHabit(name, frequency, userId, icon);
 };
 
 export const getUserHabits = async (userId: string) => {

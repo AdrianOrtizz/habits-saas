@@ -25,7 +25,11 @@ export const getGoalsController = asyncHandler(
 export const createGoalController = asyncHandler(
   async (req: AuthRequest, res: Response) => {
     const parsed = createGoalSchema.parse(req);
-    const newGoal = await createGoal(req.userId!, parsed.body.name);
+    const newGoal = await createGoal(
+      req.userId!,
+      parsed.body.name,
+      parsed.body.icon,
+    );
     res.status(201).json(newGoal);
   },
 );

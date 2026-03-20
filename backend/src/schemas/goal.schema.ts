@@ -20,6 +20,7 @@ export const createGoalSchema = z.object({
         nameRegex,
         "El nombre solo puede contener letras, números y espacios",
       ),
+    icon: z.string("El icono es obligatorio"),
   }),
 });
 

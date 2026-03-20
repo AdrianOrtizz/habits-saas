@@ -5,11 +5,13 @@ export const createHabit = async (
   name: string,
   frequency: HabitFrequency,
   userId: string,
+  icon: string,
 ) => {
   return HabitModel.create({
     name,
     frequency,
     userId: new Types.ObjectId(userId),
+    icon,
   });
 };
 
