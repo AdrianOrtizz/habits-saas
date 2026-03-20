@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import QueryProvider from "@/providers/QueryProvider";
-import AuthProvider from "@/providers/AuthContext";
+import AuthProvider from "@/providers/AuthProvider";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
