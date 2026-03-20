@@ -11,8 +11,9 @@ export type HabitStep = {
 };
 
 export type DashboardHabit = {
-  _id: string;
+  id: string;
   name: string;
+  icon: string;
   frequency: HabitFrequency;
   streak: number;
   progress: {

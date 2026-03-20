@@ -4,9 +4,11 @@ import { Typography } from "antd";
 
 import IconDisplay from "@/components/common/IconDisplay";
 
+import { DashboardHabit } from "@/types/habits.types";
+
 const { Text } = Typography;
 
-const HabitItem = ({ habit }: { habit: any }) => {
+const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
   return (
     <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group">
       <div className="flex items-center gap-4 min-w-0">
@@ -15,10 +17,7 @@ const HabitItem = ({ habit }: { habit: any }) => {
         </div>
 
         <div className="flex flex-col min-w-0">
-          <Text
-            strong
-            className={`truncate text-sm md:text-base ${habit.completed ? "line-through text-gray-400 font-normal" : "text-gray-800"}`}
-          >
+          <Text strong className="truncate text-sm md:text-base text-gray-800">
             {habit.name}
           </Text>
           <div className="flex items-center gap-2">
