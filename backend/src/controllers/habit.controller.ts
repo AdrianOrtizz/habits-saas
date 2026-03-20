@@ -22,6 +22,7 @@ export const createHabitController = asyncHandler(
       parsed.name,
       parsed.frequency as any,
       req.userId!,
+      parsed.icon,
     );
 
     res.status(201).json(habit);

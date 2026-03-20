@@ -8,6 +8,7 @@ export type HabitFrequency =
 export interface HabitDocument {
   name: string;
   frequency: HabitFrequency;
+  icon: string;
   userId: Types.ObjectId;
   createdAt: Date;
   isActive: boolean;
@@ -16,6 +17,12 @@ export interface HabitDocument {
 const habitSchema = new Schema<HabitDocument>(
   {
     name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    icon: {
       type: String,
       required: true,
       trim: true,
