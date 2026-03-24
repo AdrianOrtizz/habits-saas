@@ -7,7 +7,6 @@ import {
   ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
-import api from "@/api/axios";
 
 import { User } from "@/types/auth.types";
 
@@ -22,7 +21,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -50,13 +49,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.push("/login");
   };
 
+  const isAuthenticated = user?.id ? true : false;
+
   return (
     <AuthContext.Provider
       value={{
         user,
         login,
         logout,
-        isAuthenticated: !!user,
+        isAuthenticated,
         isLoading,
       }}
     >
