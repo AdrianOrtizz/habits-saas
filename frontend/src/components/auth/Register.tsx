@@ -1,16 +1,20 @@
 "use client";
-import { Form, Input, Button, Typography, Card, Checkbox } from "antd";
+import { Form, Input, Button, Typography, Card } from "antd";
 import { Mail, Lock, User, ArrowRight, ShieldCheck } from "lucide-react";
+const { Title, Text } = Typography;
+
 import Link from "next/link";
 
-const { Title, Text } = Typography;
+import { useAuthMutations } from "@/hooks/useAuthMutations";
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
 
+  const { registerMutation } = useAuthMutations();
+
   const onFinish = (values: any) => {
     const { confirmPassword, ...registerData } = values;
-    console.log("Datos para el registro en NestJS:", registerData);
+    registerMutation.mutate(registerData);
   };
 
   return (
@@ -101,42 +105,12 @@ const RegisterPage = () => {
             </Form.Item>
           </div>
 
-          <Form.Item
-            name="terms"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(new Error("Debes aceptar los términos")),
-              },
-            ]}
-          >
-            <Checkbox className="text-[11px] leading-tight">
-              Acepto los{" "}
-              <Link
-                href="#"
-                className="text-primary font-medium hover:underline"
-              >
-                Términos de Servicio
-              </Link>{" "}
-              y la{" "}
-              <Link
-                href="#"
-                className="text-primary font-medium hover:underline"
-              >
-                Política de Privacidad
-              </Link>
-              .
-            </Checkbox>
-          </Form.Item>
-
           <Form.Item className="pt-2">
             <Button
               type="primary"
+              loading={registerMutation.isPending}
               htmlType="submit"
-              className="w-full h-12 bg-primary hover:!bg-emerald-600 rounded-layout font-bold flex items-center justify-center gap-2"
+              className="w-full h-12 bg-primary hover:!bg-emerald-600 rounded-layout !font-bold flex items-center justify-center gap-2"
             >
               Registrarme <ArrowRight size={18} />
             </Button>

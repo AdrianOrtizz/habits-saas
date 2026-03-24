@@ -1,14 +1,17 @@
 "use client";
-import { Form, Input, Button, Typography, Checkbox, Card, Divider } from "antd";
+import { Form, Input, Button, Typography, Card } from "antd";
 import { Mail, Lock, ArrowRight } from "lucide-react";
-import Link from "next/link";
-
 const { Title, Text } = Typography;
 
+import Link from "next/link";
+
+import { useAuthMutations } from "@/hooks/useAuthMutations";
+
 const LoginPage = () => {
+  const { loginMutation } = useAuthMutations();
+
   const onFinish = (values: any) => {
-    console.log("Datos de login para la API:", values);
-    // Aquí integraremos el fetch al backend de NestJS próximamente
+    loginMutation.mutate(values);
   };
 
   return (
@@ -62,32 +65,16 @@ const LoginPage = () => {
             />
           </Form.Item>
 
-          <div className="flex justify-between items-center mb-6">
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox className="text-xs">Recordarme</Checkbox>
-            </Form.Item>
-            <Link
-              href="#"
-              className="text-xs text-primary hover:underline font-medium"
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </div>
-
           <Form.Item className="mb-0">
             <Button
               type="primary"
               htmlType="submit"
-              className="w-full h-12 bg-primary hover:!bg-emerald-600 rounded-layout font-bold flex items-center justify-center gap-2"
+              className="w-full h-12 bg-primary hover:!bg-emerald-600 rounded-layout !font-bold flex items-center justify-center gap-2"
             >
               Iniciar Sesión <ArrowRight size={18} />
             </Button>
           </Form.Item>
         </Form>
-
-        <Divider plain className="text-gray-400 text-xs my-8">
-          O continúa con
-        </Divider>
 
         <div className="text-center">
           <Text type="secondary" className="text-sm">
