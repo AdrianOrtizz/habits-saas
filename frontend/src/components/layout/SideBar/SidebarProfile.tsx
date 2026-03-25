@@ -6,17 +6,17 @@ import { LogOut } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
 
 export const SidebarProfile = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   return (
     <div className="flex items-center gap-3 p-4 border-t border-gray-100 mt-auto">
       <Avatar
-        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adrian"
+        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name}`}
         size="large"
       />
       <div className="flex w-full items-center">
         <Text strong className="mr-2">
-          Adrian
+          {user?.name}
         </Text>
         <Button type="link" onClick={() => logout()}>
           <LogOut size={16} />

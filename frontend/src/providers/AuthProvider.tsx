@@ -12,6 +12,8 @@ import api from "@/api/axios";
 
 import { User } from "@/types/auth.types";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 interface AuthContextType {
   user: User | null;
   login: (authData: { user: any; access_token: string }) => void;
@@ -26,6 +28,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -58,6 +62,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("habitzz_token");
     localStorage.removeItem("habitzz_user");
     setUser(null);
+    queryClient.clear();
     router.push("/login");
   };
 

@@ -1,10 +1,13 @@
 import { Form } from "antd";
-import { CreateHabit } from "../types/habits.types";
+import { ICreateHabit } from "../types/habits.types";
 
-export const createHabitHandler = (onClose: () => void) => {
+import { useCreateHabitMutation } from "./useHabitMutations";
+
+export const useCreateHabitForm = (onClose: () => void) => {
   const [form] = Form.useForm();
-
   const frequencyType = Form.useWatch(["frequency", "type"], form);
+
+  const { mutateAsync, isPending } = useCreateHabitMutation();
 
   const daysOptions = [
     { label: "Lun", value: 0 },
@@ -20,7 +23,7 @@ export const createHabitHandler = (onClose: () => void) => {
     try {
       const values = await form.validateFields();
 
-      let finalHabit: CreateHabit = {
+      let finalHabit: ICreateHabit = {
         name: values.name,
         icon: values.icon,
         frequency: {
@@ -41,8 +44,7 @@ export const createHabitHandler = (onClose: () => void) => {
         };
       }
 
-      console.log("Hábito creado:", finalHabit);
-      //   onCreate(finalHabit);
+      await mutateAsync(finalHabit);
       form.resetFields();
       onClose();
     } catch (error) {
@@ -55,5 +57,6 @@ export const createHabitHandler = (onClose: () => void) => {
     daysOptions,
     form,
     handleSubmit,
+    isPending,
   };
 };

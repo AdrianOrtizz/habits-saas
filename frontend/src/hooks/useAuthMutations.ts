@@ -4,10 +4,11 @@ import { useAuth } from "@/providers/AuthProvider";
 
 import { useMutation } from "@tanstack/react-query";
 
-import { message } from "antd";
+import { App } from "antd";
 
 export const useAuthMutations = () => {
   const { login: saveAuth } = useAuth();
+  const { message } = App.useApp();
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: any) => {
