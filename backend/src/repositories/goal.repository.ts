@@ -32,7 +32,7 @@ export const update = async (
   return await GoalModel.findOneAndUpdate(
     { _id: goalId, userId: new Types.ObjectId(userId) },
     updateData,
-    { new: true },
+    { returnDocument: "after" },
   );
 };
 
