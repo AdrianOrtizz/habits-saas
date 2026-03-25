@@ -4,3 +4,8 @@ export interface Goal {
   icon: string;
   completed: boolean;
 }
+
+export interface CreateGoal {
+  name: string;
+  icon: string;
+}
