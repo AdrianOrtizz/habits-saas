@@ -11,3 +11,8 @@ export const createHabit = async (habit: ICreateHabit) => {
   const { data } = await api.post("/habits", habit);
   return data;
 };
+
+export const completeHabit = async (habitId: string) => {
+  const { data } = await api.post(`/habits/${habitId}/complete`);
+  return data;
+};
