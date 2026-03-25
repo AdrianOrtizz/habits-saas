@@ -1,22 +1,13 @@
 "use client";
 import { Flex, Typography, Button, Card } from "antd";
 import { CheckCircle2, Circle } from "lucide-react";
-import * as LucideIcons from "lucide-react";
-
 const { Text } = Typography;
 
-interface GoalItemProps {
-  goal: {
-    id: number;
-    name: string;
-    icon: string;
-    completed: boolean;
-  };
-}
+import IconDisplay from "../common/IconDisplay";
 
-const GoalItem = ({ goal }: GoalItemProps) => {
-  const IconComponent = (LucideIcons as any)[goal.icon] || LucideIcons.Target;
+import { Goal } from "@/types/goals.types";
 
+const GoalItem = ({ goal }: { goal: Goal }) => {
   return (
     <Card
       className={`border-gray-100 rounded-layout shadow-sm mb-4 transition-all ${
@@ -38,7 +29,7 @@ const GoalItem = ({ goal }: GoalItemProps) => {
                 : "bg-gray-100 text-gray-500"
             }`}
           >
-            <IconComponent size={24} />
+            <IconDisplay iconName={goal.icon} size={24} />
           </div>
 
           <Text strong className="truncate text-sm md:text-base text-gray-800">

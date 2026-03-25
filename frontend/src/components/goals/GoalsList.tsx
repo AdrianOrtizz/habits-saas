@@ -1,34 +1,17 @@
 "use client";
 import { Flex, Typography } from "antd";
-import GoalItem from "./GoalsItem";
-
 const { Title } = Typography;
 
-const GOALS_MOCK = [
-  {
-    id: 1,
-    name: "Tomar agua todos los días",
-    icon: "Droplets",
-    completed: true,
-  },
-  { id: 2, name: "Ir al gimnasio 3 veces", icon: "Dumbbell", completed: false },
-  { id: 3, name: "Leer 100 páginas", icon: "BookOpen", completed: false },
-  { id: 4, name: "Dormir antes de las 23:30", icon: "Moon", completed: true },
-  {
-    id: 5,
-    name: "Preparar 4 comidas caseras",
-    icon: "CookingPot",
-    completed: false,
-  },
-  {
-    id: 6,
-    name: "Reducir redes sociales a 1 hora por día",
-    icon: "Smartphone",
-    completed: true,
-  },
-];
+import GoalItem from "./GoalsItem";
+import Loading from "../common/Spinner";
+
+import { Goal } from "@/types/goals.types";
+
+import { useGoals } from "@/hooks/useGoals";
 
 const GoalList = () => {
+  const { data, isLoading } = useGoals();
+
   return (
     <div className="bg-white border border-gray-100 rounded-layout shadow-sm overflow-hidden p-6 md:p-8">
       <Flex
@@ -44,11 +27,15 @@ const GoalList = () => {
         </Title>
       </Flex>
 
-      <div className="space-y-4">
-        {GOALS_MOCK.map((goal) => (
-          <GoalItem key={goal.id} goal={goal} />
-        ))}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="space-y-4">
+          {data.map((goal: Goal) => (
+            <GoalItem key={goal.id} goal={goal} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

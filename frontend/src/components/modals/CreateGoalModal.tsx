@@ -34,7 +34,7 @@ const CreateGoalModal = ({
       okText="Establecer objetivo"
       cancelText="Cancelar"
       okButtonProps={{ className: "bg-primary h-10 px-6" }}
-      destroyOnClose
+      destroyOnHidden
       width={500}
     >
       <div className="mb-6 mt-2">
