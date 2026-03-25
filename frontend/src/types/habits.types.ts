@@ -23,7 +23,7 @@ export type DashboardHabit = {
   steps: HabitStep[];
 };
 
-export interface CreateHabit {
+export interface ICreateHabit {
   name: string;
   icon: string;
   frequency: HabitFrequency;

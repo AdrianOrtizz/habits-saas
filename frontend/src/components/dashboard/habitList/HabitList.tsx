@@ -7,7 +7,7 @@ const HabitList = ({ habits }: { habits: DashboardHabit[] }) => {
   return (
     <div className="bg-white border border-gray-100 rounded-layout shadow-sm overflow-hidden">
       <div className="divide-y divide-gray-50">
-        {habits.map((habit) => (
+        {habits?.map((habit) => (
           <HabitItem key={habit.id} habit={habit} />
         ))}
       </div>

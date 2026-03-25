@@ -1,23 +1,18 @@
 "use client";
 import { Modal, Form, Input, Select, Checkbox } from "antd";
 
-import { createHabitHandler } from "@/hooks/createHabit";
+import { useCreateHabitForm } from "@/hooks/useCreateHabitForm";
 
 import IconPicker from "@/components/common/IconPicker";
 
 interface CreateHabitModalProps {
   isOpen: boolean;
   onClose: () => void;
-  //   onCreate: (habit: any) => void;
 }
 
-const CreateHabitModal = ({
-  isOpen,
-  onClose,
-  //   onCreate,
-}: CreateHabitModalProps) => {
-  const { form, frequencyType, daysOptions, handleSubmit } =
-    createHabitHandler(onClose);
+const CreateHabitModal = ({ isOpen, onClose }: CreateHabitModalProps) => {
+  const { form, frequencyType, daysOptions, handleSubmit, isPending } =
+    useCreateHabitForm(onClose);
 
   return (
     <Modal
@@ -25,6 +20,7 @@ const CreateHabitModal = ({
       open={isOpen}
       onCancel={onClose}
       onOk={handleSubmit}
+      confirmLoading={isPending}
       okText="Crear hábito"
       cancelText="Cancelar"
       okButtonProps={{ className: "bg-primary" }}
