@@ -1,13 +1,16 @@
 "use client";
-import { Card, Progress, Typography } from "antd";
-
+import { Card, Progress, Typography, Skeleton } from "antd";
 const { Title, Text } = Typography;
 
-const WeeklyProgress = () => {
-  const completedHabits = 18;
-  const totalHabits = 24;
-  const percentage = Math.round((completedHabits / totalHabits) * 100);
+import { HabitSummary } from "@/types/habits.types";
 
+const WeeklyProgress = ({
+  summary,
+  isLoading,
+}: {
+  summary: HabitSummary;
+  isLoading: boolean;
+}) => {
   return (
     <Card
       className="shadow-lg shadow-emerald-100 border-none relative overflow-hidden"
@@ -34,20 +37,24 @@ const WeeklyProgress = () => {
           </Text>
         </div>
 
-        <div className="flex-1 w-full">
-          <Progress
-            percent={percentage}
-            strokeColor="#ffffff"
-            railColor="rgba(255,255,255,0.2)"
-            showInfo={false}
-            className="m-0"
-          />
-          <div className="flex justify-end mt-1">
-            <Text className="!text-white text-sm md:!text-lg font-bold">
-              {completedHabits} / {totalHabits} hábitos
-            </Text>
+        {isLoading ? (
+          <Skeleton active />
+        ) : (
+          <div className="flex-1 w-full">
+            <Progress
+              percent={summary?.progressPercentage}
+              strokeColor="#ffffff"
+              railColor="rgba(255,255,255,0.2)"
+              showInfo={false}
+              className="m-0"
+            />
+            <div className="flex justify-end mt-1">
+              <Text className="!text-white text-sm md:!text-lg font-bold">
+                {summary?.completedSteps} / {summary?.totalSteps} hábitos
+              </Text>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Card>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { Check } from "lucide-react";
-import { Typography } from "antd";
+import { Typography, Button } from "antd";
 
 import IconDisplay from "@/components/common/IconDisplay";
 
@@ -39,9 +39,7 @@ const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
         </div>
       </div>
 
-      <button
-        className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all bg-primary border-primary text-white scale-110`}
-      >
+      <button className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all bg-gray-400 text-white scale-110 hover:bg-primary/70 hover:cursor-pointer">
         <Check size={16} strokeWidth={3} className="block text-gray-200" />
       </button>
     </div>

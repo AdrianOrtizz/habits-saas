@@ -1,24 +1,32 @@
 "use client";
 import { useState } from "react";
-import { Button, Typography, Space } from "antd";
+
+import { Button, Typography, Space, Skeleton } from "antd";
 import { SlidersHorizontal, Plus } from "lucide-react";
+const { Title, Text } = Typography;
+
 import CreateHabitModal from "../modals/CreateHabitModal";
 
-const { Title, Text } = Typography;
+import { useAuth } from "@/providers/AuthProvider";
 
 const DashboardHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, isLoading } = useAuth();
 
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-      <div>
-        <Title level={2} style={{ margin: 0 }}>
-          Hola, Adrian 👋
-        </Title>
-        <Text type="secondary" className="text-sm">
-          Estás en una racha de 5 días. ¡Sigue así!
-        </Text>
-      </div>
+      {isLoading ? (
+        <Skeleton active />
+      ) : (
+        <div>
+          <Title level={2} style={{ margin: 0 }}>
+            Hola, {user?.name} 👋
+          </Title>
+          <Text type="secondary" className="text-sm">
+            Estás en una racha de 5 días. ¡Sigue así!
+          </Text>
+        </div>
+      )}
 
       <Space size="middle">
         <Button className="flex items-center gap-2 !p-5 border-none bg-white shadow-sm hover:text-primary">
