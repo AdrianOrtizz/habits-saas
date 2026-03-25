@@ -36,6 +36,7 @@ export const createHabitSchema = z.object({
 
 export const updateHabitSchema = z.object({
   name: z.string().min(1, "Habit name is required").optional(),
+  icon: z.string().min(1, "Habit icon is required").optional(),
   frequency: frequencySchema.optional(),
 });
 
