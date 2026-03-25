@@ -1,8 +1,10 @@
 import "./globals.css";
 
 import QueryProvider from "@/providers/QueryProvider";
+import AuthProvider from "@/providers/AuthProvider";
+
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, App as AntdApp } from "antd";
 
 import { Open_Sans } from "next/font/google";
 
@@ -33,11 +35,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={openSans.className}>
       <body>
-        <AntdRegistry>
-          <ConfigProvider theme={theme}>
-            <QueryProvider>{children}</QueryProvider>
-          </ConfigProvider>
-        </AntdRegistry>
+        <AntdApp>
+          <AntdRegistry>
+            <ConfigProvider theme={theme}>
+              <QueryProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </QueryProvider>
+            </ConfigProvider>
+          </AntdRegistry>
+        </AntdApp>
       </body>
     </html>
   );

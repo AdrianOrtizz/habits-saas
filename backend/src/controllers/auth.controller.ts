@@ -5,12 +5,9 @@ import { asyncHandler } from "../utils/asyncHandler";
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
-  const user = await registerUser(name, email, password);
+  const data = await registerUser(name, email, password);
 
-  res.status(201).json({
-    message: "User created successfully",
-    user,
-  });
+  res.status(201).json(data);
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
