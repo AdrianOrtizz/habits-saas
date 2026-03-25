@@ -6,7 +6,7 @@ import { Target } from "lucide-react";
 
 import IconPicker from "@/components/common/IconPicker";
 
-import { useCreateGoalForm } from "@/hooks/createGoal";
+import { useCreateGoalForm } from "@/hooks/useCreateGoalForm";
 
 interface CreateGoalModalProps {
   isOpen: boolean;
