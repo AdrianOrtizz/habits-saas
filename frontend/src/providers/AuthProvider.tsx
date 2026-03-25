@@ -8,6 +8,8 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 
+import api from "@/api/axios";
+
 import { User } from "@/types/auth.types";
 
 interface AuthContextType {
@@ -26,13 +28,23 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("habitzz_token");
-    const savedUser = localStorage.getItem("habitzz_user");
+    const checkAuth = async () => {
+      try {
+        const { data } = await api.get("/auth/me");
 
-    if (token && savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setIsLoading(false);
+        setUser(data);
+      } catch (error) {
+        console.error("Token inválido o expirado");
+        localStorage.removeItem("habitzz_token");
+        localStorage.removeItem("habitzz_user");
+        setUser(null);
+        router.push("/login");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const login = (authData: { user: any; access_token: string }) => {
