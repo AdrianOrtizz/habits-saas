@@ -10,7 +10,7 @@ interface IconPickerProps {
 
 const IconPicker = ({ value, onChange }: IconPickerProps) => {
   return (
-    <div className="grid grid-cols-5 md:grid-cols-10 gap-2 p-1">
+    <div className="grid grid-cols-5 md:grid-cols-10 gap-4 justify-start p-1">
       {HABIT_ICONS.map((item) => {
         const Icon = item.icon;
         const isSelected = value === item.name;

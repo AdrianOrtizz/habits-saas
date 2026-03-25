@@ -31,7 +31,9 @@ export const updateHabit = async (
   habitId: string,
   data: Partial<{ name: string; frequency: HabitFrequency }>,
 ) => {
-  return HabitModel.findByIdAndUpdate(habitId, data, { new: true });
+  return HabitModel.findByIdAndUpdate(habitId, data, {
+    returnDocument: "after",
+  });
 };
 
 export const deleteHabit = async (habitId: string) => {

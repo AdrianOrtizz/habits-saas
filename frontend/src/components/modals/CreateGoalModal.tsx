@@ -1,24 +1,20 @@
 "use client";
 
 import { Modal, Form, Input, Typography, Divider } from "antd";
-import { Target } from "lucide-react";
-import IconPicker from "@/components/common/IconPicker";
-import { createGoalHandler } from "@/hooks/createGoal";
-
 const { Text } = Typography;
+import { Target } from "lucide-react";
+
+import IconPicker from "@/components/common/IconPicker";
+
+import { useCreateGoalForm } from "@/hooks/useCreateGoalForm";
 
 interface CreateGoalModalProps {
   isOpen: boolean;
   onClose: () => void;
-  //   onCreate: (goal: any) => void;
 }
 
-const CreateGoalModal = ({
-  isOpen,
-  onClose,
-  //   onCreate,
-}: CreateGoalModalProps) => {
-  const { form, handleSubmit } = createGoalHandler(onClose);
+const CreateGoalModal = ({ isOpen, onClose }: CreateGoalModalProps) => {
+  const { form, handleSubmit, isPending } = useCreateGoalForm(onClose);
 
   return (
     <Modal
@@ -32,9 +28,10 @@ const CreateGoalModal = ({
       onCancel={onClose}
       onOk={handleSubmit}
       okText="Establecer objetivo"
+      confirmLoading={isPending}
       cancelText="Cancelar"
       okButtonProps={{ className: "bg-primary h-10 px-6" }}
-      destroyOnClose
+      destroyOnHidden
       width={500}
     >
       <div className="mb-6 mt-2">

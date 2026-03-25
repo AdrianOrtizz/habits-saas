@@ -1,21 +1,16 @@
 "use client";
-import { Flex, Typography, Button, Card } from "antd";
-import { CheckCircle2, Circle } from "lucide-react";
-import * as LucideIcons from "lucide-react";
-
+import { Flex, Typography, Card, Popconfirm } from "antd";
+import { Check } from "lucide-react";
 const { Text } = Typography;
 
-interface GoalItemProps {
-  goal: {
-    id: number;
-    name: string;
-    icon: string;
-    completed: boolean;
-  };
-}
+import IconDisplay from "../common/IconDisplay";
 
-const GoalItem = ({ goal }: GoalItemProps) => {
-  const IconComponent = (LucideIcons as any)[goal.icon] || LucideIcons.Target;
+import { Goal } from "@/types/goals.types";
+
+import { useCompleteGoalMutation } from "@/hooks/useGoalMutations";
+
+const GoalItem = ({ goal }: { goal: Goal }) => {
+  const { mutate: completeGoal, isPending } = useCompleteGoalMutation();
 
   return (
     <Card
@@ -38,7 +33,7 @@ const GoalItem = ({ goal }: GoalItemProps) => {
                 : "bg-gray-100 text-gray-500"
             }`}
           >
-            <IconComponent size={24} />
+            <IconDisplay iconName={goal.icon} size={24} />
           </div>
 
           <Text strong className="truncate text-sm md:text-base text-gray-800">
@@ -46,19 +41,21 @@ const GoalItem = ({ goal }: GoalItemProps) => {
           </Text>
         </Flex>
 
-        <Button
-          type={goal.completed ? "primary" : "default"}
-          icon={
-            goal.completed ? <CheckCircle2 size={18} /> : <Circle size={18} />
-          }
-          className={`flex items-center gap-2 h-10 px-5 rounded-full text-xs font-semibold ${
-            goal.completed
-              ? "bg-primary hover:!bg-primary/90 border-none"
-              : "border-gray-200 text-gray-600 hover:border-primary hover:text-primary"
-          }`}
+        <Popconfirm
+          title="¿Completar objetivo?"
+          description="¿Seguro que querés marcar este objetivo como completado?"
+          onConfirm={() => completeGoal(goal.id)}
+          okText="Sí, completar"
+          cancelText="Cancelar"
+          okButtonProps={{ loading: isPending }}
         >
-          {goal.completed ? "Completado" : "Marcar como completado"}
-        </Button>
+          <button
+            disabled={goal.completed}
+            className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all text-white scale-110  ${goal.completed ? "bg-primary" : "bg-gray-400 hover:bg-primary/70 hover:cursor-pointer"}`}
+          >
+            <Check size={16} strokeWidth={3} className="block text-gray-200" />
+          </button>
+        </Popconfirm>
       </Flex>
     </Card>
   );

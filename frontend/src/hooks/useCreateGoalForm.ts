@@ -1,11 +1,12 @@
 "use client";
 import { Form } from "antd";
 
-export const createGoalHandler = (
-  onClose: () => void,
-  //   onCreate: (goal: any) => void,
-) => {
+import { useCreateGoalMutation } from "./useGoalMutations";
+
+export const useCreateGoalForm = (onClose: () => void) => {
   const [form] = Form.useForm();
+
+  const { mutateAsync, isPending } = useCreateGoalMutation();
 
   const handleSubmit = async () => {
     try {
@@ -16,8 +17,7 @@ export const createGoalHandler = (
         icon: values.icon,
       };
 
-      console.log("Objetivo para el backend:", finalGoal);
-      //   onCreate(finalGoal);
+      await mutateAsync(finalGoal);
       form.resetFields();
       onClose();
     } catch (error) {
@@ -28,5 +28,6 @@ export const createGoalHandler = (
   return {
     form,
     handleSubmit,
+    isPending,
   };
 };

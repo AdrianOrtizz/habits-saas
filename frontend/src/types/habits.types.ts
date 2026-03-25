@@ -29,6 +29,11 @@ export interface ICreateHabit {
   frequency: HabitFrequency;
 }
 
+export interface IUpdateHabit {
+  name?: string;
+  icon?: string;
+}
+
 export interface HabitSummary {
   totalSteps: number;
   completedSteps: number;
