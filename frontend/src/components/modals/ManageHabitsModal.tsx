@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Modal, List, Input, Button, Popconfirm } from "antd";
+import { Modal, Input, Button, Popconfirm } from "antd";
 
 import {
   EditOutlined,
@@ -17,10 +17,12 @@ import {
 import IconDisplay from "../common/IconDisplay";
 import IconPicker from "../common/IconPicker";
 
+import { DashboardHabit } from "@/types/habits.types";
+
 interface ManageHabitsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  habits: any[];
+  habits: DashboardHabit[];
 }
 const ManageHabitsModal = ({
   isOpen,
@@ -64,78 +66,79 @@ const ManageHabitsModal = ({
       width={650}
       destroyOnHidden
     >
-      <List
-        dataSource={habits}
-        renderItem={(habit) => {
+      <div className="flex flex-col">
+        {habits.map((habit) => {
           const isEditing = editingId === habit.id;
 
           return (
-            <List.Item
-              actions={
-                isEditing
-                  ? [
-                      <Button
-                        key="save"
-                        type="text"
-                        className="text-green-500"
-                        icon={<SaveOutlined />}
-                        loading={isUpdating}
-                        onClick={() => handleSave(habit.id)}
-                      />,
-                      <Button
-                        key="cancel"
-                        type="text"
-                        className="text-gray-500"
-                        icon={<CloseOutlined />}
-                        onClick={cancelEditing}
-                      />,
-                    ]
-                  : [
-                      <Button
-                        key="edit"
-                        type="text"
-                        className="text-blue-500"
-                        icon={<EditOutlined />}
-                        onClick={() => startEditing(habit)}
-                      />,
-                      <Popconfirm
-                        key="delete"
-                        title="¿Borrar hábito?"
-                        description="Perderás todo el progreso. ¿Estás seguro?"
-                        onConfirm={() => deleteHabit(habit.id)}
-                        okButtonProps={{ loading: isDeleting, danger: true }}
-                      >
-                        <Button type="text" danger icon={<DeleteOutlined />} />
-                      </Popconfirm>,
-                    ]
-              }
+            <div
+              key={habit.id}
+              className="flex items-center justify-between py-4 border-b border-gray-100 last:border-0"
             >
-              {isEditing ? (
-                <div className="flex flex-col gap-3 items-center w-full pr-4">
-                  <div className="flex-shrink-0">
+              <div className="flex-1 overflow-hidden pr-4">
+                {isEditing ? (
+                  <div className="flex flex-col gap-y-6 w-full">
                     <IconPicker
                       value={editIcon}
                       onChange={(newIcon) => setEditIcon(newIcon)}
                     />
+                    <Input
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      placeholder="Nombre del hábito"
+                    />
                   </div>
-                  <Input
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    className="flex-1"
-                  />
-                </div>
-              ) : (
-                <div className="flex items-center gap-3">
-                  <span className="text-xl">
-                    <IconDisplay iconName={habit.icon} size={24} />
-                  </span>
-                  <span className="font-medium">{habit.name}</span>
-                </div>
-              )}
-            </List.Item>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <IconDisplay
+                      className="text-2xl text-primary"
+                      iconName={habit.icon}
+                    />
+                    <span className="font-medium text-lg">{habit.name}</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-1">
+                {isEditing ? (
+                  <>
+                    <Button
+                      type="text"
+                      className="text-green-500"
+                      icon={<SaveOutlined />}
+                      loading={isUpdating}
+                      onClick={() => handleSave(habit.id)}
+                    />
+                    <Button
+                      type="text"
+                      className="text-gray-500"
+                      icon={<CloseOutlined />}
+                      onClick={cancelEditing}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      type="text"
+                      className="text-blue-500"
+                      icon={<EditOutlined />}
+                      onClick={() => startEditing(habit)}
+                    />
+                    <Popconfirm
+                      title="¿Borrar hábito?"
+                      description="Perderás todo el progreso. ¿Estás seguro?"
+                      onConfirm={() => deleteHabit(habit.id)}
+                      okButtonProps={{ loading: isDeleting, danger: true }}
+                    >
+                      <Button type="text" danger icon={<DeleteOutlined />} />
+                    </Popconfirm>
+                  </>
+                )}
+              </div>
+            </div>
           );
-        }}
-      />
+        })}
+      </div>
     </Modal>
   );
 };
