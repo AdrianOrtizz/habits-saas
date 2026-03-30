@@ -11,18 +11,19 @@ import { DashboardHabit } from "@/types/habits.types";
 
 import { useCompleteHabitMutation } from "@/hooks/useHabitMutations";
 
-import { currentHabitDay } from "@/utils/currentHabitDay";
+import { shouldBeDisabled } from "@/utils/shouldBeDisabled";
 
 const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
   const { mutate: completeHabit, isPending } = useCompleteHabitMutation();
 
-  const [isToday, setIsToday] = useState(false);
+  const [isDisabled, setIsDisabled] = useState({
+    disabled: false,
+    styles: "",
+  });
 
   useEffect(() => {
-    if (habit.frequency.type === "weekly_specific_days") {
-      setIsToday(currentHabitDay(habit.frequency as any));
-    }
-  }, [habit.frequency]);
+    setIsDisabled(shouldBeDisabled(habit));
+  }, [habit]);
 
   return (
     <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group">
@@ -68,8 +69,8 @@ const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
         okButtonProps={{ loading: isPending }}
       >
         <button
-          disabled={isToday || habit.isCompletedToday}
-          className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all text-white scale-110 ${isToday ? "bg-gray-400" : habit.isCompletedToday ? "bg-primary" : "bg-gray-400 hover:bg-primary/70 hover:cursor-pointer"}`}
+          disabled={isDisabled.disabled}
+          className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all text-white scale-110 ${isDisabled.styles}`}
         >
           <Check size={16} strokeWidth={3} className="block text-gray-200" />
         </button>
