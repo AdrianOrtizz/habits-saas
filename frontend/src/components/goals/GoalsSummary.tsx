@@ -3,6 +3,8 @@ import { Card, Typography, Flex, Progress, Tag } from "antd";
 
 const { Title, Text } = Typography;
 
+import { getDaysLeftInWeek } from "@/utils/getLeftDays";
+
 const SummaryCard = ({
   title,
   value,
@@ -25,7 +27,7 @@ const SummaryCard = ({
       {typeof value === "string" && value.endsWith("%") ? (
         <Flex align="baseline" gap={4}>
           <Title
-            level={1}
+            level={2}
             className="!m-0 !leading-none font-extrabold text-gray-900"
           >
             {value}
@@ -51,7 +53,45 @@ const SummaryCard = ({
   </Card>
 );
 
-const GoalsSummary = () => {
+const TimeRemainingCard = () => {
+  const daysLeft = getDaysLeftInWeek();
+
+  return (
+    <Card className="flex flex-col h-full justify-between">
+      <div>
+        <h3 className="text-gray-400 text-sm font-medium mt-1">
+          TIEMPO RESTANTE
+        </h3>
+      </div>
+
+      <div className="flex items-baseline gap-2 my-2">
+        <Title
+          level={2}
+          className="!m-0 !leading-none font-extrabold text-gray-900"
+        >
+          {daysLeft}
+        </Title>
+        {daysLeft !== "Último día" && (
+          <span className="text-gray-400 font-medium">restantes</span>
+        )}
+      </div>
+
+      <p className="text-[11px] text-gray-400 mt-2">
+        Los objetivos se reinician el lunes a las 00:00.
+      </p>
+    </Card>
+  );
+};
+
+const GoalsSummary = ({
+  summary,
+}: {
+  summary?: {
+    total: number;
+    percentage: number;
+    completed: number;
+  };
+}) => {
   return (
     <div className="mb-10">
       <Flex
@@ -59,34 +99,22 @@ const GoalsSummary = () => {
         align="center"
         className="mb-5 flex-wrap gap-3"
       >
-        <Flex vertical>
-          <Text type="secondary" className="text-xs text-gray-400">
-            Objetivos de la semana
-          </Text>
-          <Title
-            level={3}
-            className="!m-0 !leading-tight font-bold text-gray-800"
-          >
-            16/3 al 22/3
-          </Title>
-        </Flex>
-
         <Tag
           color="warning"
           className="!bg-amber-100 !text-amber-700 !border-none !rounded-full !px-4 !py-1 !text-xs !font-semibold"
         >
-          3 de 6 completados
+          {summary?.completed} de {summary?.total} completados
         </Tag>
       </Flex>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SummaryCard
           title="Completados"
-          value="50%"
-          description="Vas por la mitad de tus objetivos."
+          value={`${summary?.percentage.toFixed(2)}%`}
+          description="Tu progreso en la semana"
           extra={
             <Progress
-              percent={50}
+              percent={summary?.percentage}
               strokeColor="#63d392"
               showInfo={false}
               className="m-0"
@@ -94,18 +122,7 @@ const GoalsSummary = () => {
           }
         />
 
-        <SummaryCard
-          title="Prioridad alta"
-          value="2"
-          description="Dos objetivos necesitan foco esta semana."
-          className="bg-emerald-50/40 border-emerald-100"
-        />
-
-        <SummaryCard
-          title="Próximo paso"
-          value="Gym"
-          description="Solo falta 1 sesión para cerrarlo."
-        />
+        <TimeRemainingCard />
       </div>
     </div>
   );

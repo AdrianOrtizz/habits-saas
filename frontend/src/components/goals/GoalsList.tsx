@@ -8,11 +8,13 @@ import EmptyState from "../common/EmptyState";
 
 import { Goal } from "@/types/goals.types";
 
-import { useGoals } from "@/hooks/useGoals";
-
-const GoalList = () => {
-  const { data, isLoading } = useGoals();
-
+const GoalList = ({
+  data,
+  isLoading,
+}: {
+  data: Goal[];
+  isLoading: boolean;
+}) => {
   return (
     <div className="bg-white border border-gray-100 rounded-layout shadow-sm overflow-hidden p-6 md:p-8">
       <Flex
@@ -37,7 +39,6 @@ const GoalList = () => {
               title="No tenés objetivos activos"
               description="Ponete una meta y hacé que cada día cuente."
               buttonText="Definir un Objetivo"
-              // onAction={() => setShowGoalModal(true)}
               imageType="default"
             />
           ) : (

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Typography, Space } from "antd";
-import { Copy, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 const { Title, Text } = Typography;
 
 const GoalsHeader = ({
@@ -21,10 +21,6 @@ const GoalsHeader = ({
       </div>
 
       <Space size="middle" className="flex-wrap">
-        <Button className="flex items-center gap-2 !p-5 border-none bg-white shadow-sm hover:text-primary">
-          <Copy size={16} />
-          Repetir los objetivos de la semana pasada
-        </Button>
         <Button
           type="primary"
           onClick={() => setIsModalOpen(true)}
