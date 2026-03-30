@@ -42,8 +42,6 @@ export const getDashboard = async (userId: string) => {
     }
   }
 
-  console.log(allCompletions);
-
   let bestGlobalStreak = 0;
   const changeBestStreak = (s: number) => {
     if (s > bestGlobalStreak) {

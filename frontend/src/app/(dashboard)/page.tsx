@@ -9,7 +9,7 @@ import { useDashboard } from "@/hooks/useDashboard";
 
 export default function HomePage() {
   const { data, isLoading } = useDashboard();
-  console.log(data);
+
   return (
     <div>
       <DashboardHeader />
