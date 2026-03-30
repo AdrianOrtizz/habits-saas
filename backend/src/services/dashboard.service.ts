@@ -19,6 +19,11 @@ export const getDashboard = async (userId: string) => {
   const allCompletions = await findCompletionsByUser(userId);
 
   const now = new Date();
+  const startOfToday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+  );
   const context = {
     todayISO: now.toISOString().split("T")[0],
     currentWeekKey: getWeekKey(now),
@@ -29,16 +34,37 @@ export const getDashboard = async (userId: string) => {
 
   const completionsMap = groupCompletionsByHabit(allCompletions);
 
+  const habitsCompletedToday = new Set<string>();
+
+  for (const c of allCompletions) {
+    if (new Date(c.createdAt) >= startOfToday) {
+      habitsCompletedToday.add(c.habitId.toString());
+    }
+  }
+
+  console.log(allCompletions);
+
+  let bestGlobalStreak = 0;
+  const changeBestStreak = (s: number) => {
+    if (s > bestGlobalStreak) {
+      bestGlobalStreak = s;
+    }
+  };
+
   const dashboardHabits = habits.map((h: any) =>
-    mapHabitToDashboard(h, completionsMap.get(h._id.toString()) || [], context),
+    mapHabitToDashboard(
+      h,
+      completionsMap.get(h._id.toString()) || [],
+      context,
+      changeBestStreak,
+      habitsCompletedToday,
+    ),
   );
 
+  const summaryData = calculateSummary(dashboardHabits);
+
   return {
-    week: {
-      start: context.weekStart.toISOString().split("T")[0],
-      end: context.weekEnd.toISOString().split("T")[0],
-    },
-    summary: calculateSummary(dashboardHabits),
+    summary: { ...summaryData, bestStreak: bestGlobalStreak },
     habits: dashboardHabits,
   };
 };
