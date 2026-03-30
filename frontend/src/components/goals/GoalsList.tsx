@@ -4,6 +4,7 @@ const { Title } = Typography;
 
 import GoalItem from "./GoalsItem";
 import Loading from "../common/Spinner";
+import EmptyState from "../common/EmptyState";
 
 import { Goal } from "@/types/goals.types";
 
@@ -21,7 +22,7 @@ const GoalList = () => {
       >
         <Title
           level={4}
-          className="!m-0 !leading-tight font-bold text-gray-800"
+          className="!my-8 !leading-tight font-bold text-gray-800"
         >
           Lista de objetivos
         </Title>
@@ -31,9 +32,21 @@ const GoalList = () => {
         <Loading />
       ) : (
         <div className="space-y-4">
-          {data.map((goal: Goal) => (
-            <GoalItem key={goal.id} goal={goal} />
-          ))}
+          {data.length === 0 ? (
+            <EmptyState
+              title="No tenés objetivos activos"
+              description="Ponete una meta y hacé que cada día cuente."
+              buttonText="Definir un Objetivo"
+              // onAction={() => setShowGoalModal(true)}
+              imageType="default"
+            />
+          ) : (
+            <div>
+              {data.map((goal: Goal) => (
+                <GoalItem key={goal.id} goal={goal} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

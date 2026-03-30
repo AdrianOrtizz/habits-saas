@@ -1,16 +1,16 @@
 "use client";
-import { useState } from "react";
 
 import { Button, Typography, Space, Skeleton } from "antd";
 import { SlidersHorizontal, Plus } from "lucide-react";
 const { Title, Text } = Typography;
 
-import CreateHabitModal from "../modals/CreateHabitModal";
-
 import { useAuth } from "@/providers/AuthProvider";
 
-const DashboardHeader = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const DashboardHeader = ({
+  setIsModalOpen,
+}: {
+  setIsModalOpen: (isOpen: boolean) => void;
+}) => {
   const { user, isLoading } = useAuth();
 
   return (
@@ -42,11 +42,6 @@ const DashboardHeader = () => {
           Crear nuevo hábito
         </Button>
       </Space>
-
-      <CreateHabitModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
     </div>
   );
 };

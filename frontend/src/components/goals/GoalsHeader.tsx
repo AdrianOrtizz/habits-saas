@@ -1,16 +1,14 @@
 "use client";
 
-import { useState } from "react";
-
 import { Button, Typography, Space } from "antd";
 import { Copy, Plus } from "lucide-react";
 const { Title, Text } = Typography;
 
-import CreateGoalModal from "../modals/CreateGoalModal";
-
-const GoalsHeader = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+const GoalsHeader = ({
+  setIsModalOpen,
+}: {
+  setIsModalOpen: (open: boolean) => void;
+}) => {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
       <div>
@@ -36,12 +34,6 @@ const GoalsHeader = () => {
           Crear nuevo objetivo
         </Button>
       </Space>
-
-      <CreateGoalModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        // onCreate={handleCreateGoal}
-      />
     </div>
   );
 };

@@ -16,6 +16,7 @@ import {
 
 import IconDisplay from "../common/IconDisplay";
 import IconPicker from "../common/IconPicker";
+import EmptyState from "../common/EmptyState";
 
 import { DashboardHabit } from "@/types/habits.types";
 
@@ -66,79 +67,83 @@ const ManageHabitsModal = ({
       width={650}
       destroyOnHidden
     >
-      <div className="flex flex-col">
-        {habits?.map((habit) => {
-          const isEditing = editingId === habit.id;
+      {habits?.length === 0 ? (
+        <EmptyState title="No tenés hábitos para editar!" description="" />
+      ) : (
+        <div className="flex flex-col">
+          {habits?.map((habit) => {
+            const isEditing = editingId === habit.id;
 
-          return (
-            <div
-              key={habit.id}
-              className="flex items-center justify-between py-4 border-b border-gray-100 last:border-0"
-            >
-              <div className="flex-1 overflow-hidden pr-4">
-                {isEditing ? (
-                  <div className="flex flex-col gap-y-6 w-full">
-                    <IconPicker
-                      value={editIcon}
-                      onChange={(newIcon) => setEditIcon(newIcon)}
-                    />
-                    <Input
-                      value={editName}
-                      onChange={(e) => setEditName(e.target.value)}
-                      placeholder="Nombre del hábito"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <IconDisplay
-                      className="text-2xl text-primary"
-                      iconName={habit.icon}
-                    />
-                    <span className="font-medium text-lg">{habit.name}</span>
-                  </div>
-                )}
-              </div>
+            return (
+              <div
+                key={habit.id}
+                className="flex items-center justify-between py-4 border-b border-gray-100 last:border-0"
+              >
+                <div className="flex-1 overflow-hidden pr-4">
+                  {isEditing ? (
+                    <div className="flex flex-col gap-y-6 w-full">
+                      <IconPicker
+                        value={editIcon}
+                        onChange={(newIcon) => setEditIcon(newIcon)}
+                      />
+                      <Input
+                        value={editName}
+                        onChange={(e) => setEditName(e.target.value)}
+                        placeholder="Nombre del hábito"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3">
+                      <IconDisplay
+                        className="text-2xl text-primary"
+                        iconName={habit.icon}
+                      />
+                      <span className="font-medium text-lg">{habit.name}</span>
+                    </div>
+                  )}
+                </div>
 
-              <div className="flex items-center gap-1">
-                {isEditing ? (
-                  <>
-                    <Button
-                      type="text"
-                      className="text-green-500"
-                      icon={<SaveOutlined />}
-                      loading={isUpdating}
-                      onClick={() => handleSave(habit.id)}
-                    />
-                    <Button
-                      type="text"
-                      className="text-gray-500"
-                      icon={<CloseOutlined />}
-                      onClick={cancelEditing}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      type="text"
-                      className="text-blue-500"
-                      icon={<EditOutlined />}
-                      onClick={() => startEditing(habit)}
-                    />
-                    <Popconfirm
-                      title="¿Borrar hábito?"
-                      description="Perderás todo el progreso. ¿Estás seguro?"
-                      onConfirm={() => deleteHabit(habit.id)}
-                      okButtonProps={{ loading: isDeleting, danger: true }}
-                    >
-                      <Button type="text" danger icon={<DeleteOutlined />} />
-                    </Popconfirm>
-                  </>
-                )}
+                <div className="flex items-center gap-1">
+                  {isEditing ? (
+                    <>
+                      <Button
+                        type="text"
+                        className="text-green-500"
+                        icon={<SaveOutlined />}
+                        loading={isUpdating}
+                        onClick={() => handleSave(habit.id)}
+                      />
+                      <Button
+                        type="text"
+                        className="text-gray-500"
+                        icon={<CloseOutlined />}
+                        onClick={cancelEditing}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        type="text"
+                        className="text-blue-500"
+                        icon={<EditOutlined />}
+                        onClick={() => startEditing(habit)}
+                      />
+                      <Popconfirm
+                        title="¿Borrar hábito?"
+                        description="Perderás todo el progreso. ¿Estás seguro?"
+                        onConfirm={() => deleteHabit(habit.id)}
+                        okButtonProps={{ loading: isDeleting, danger: true }}
+                      >
+                        <Button type="text" danger icon={<DeleteOutlined />} />
+                      </Popconfirm>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </Modal>
   );
 };
