@@ -5,7 +5,7 @@ const { Text } = Typography;
 
 import { getCurrentWeek } from "@/utils/getCurrentWeek";
 
-const DaysSelector = () => {
+const DaysSelector = ({ bestStreak }: { bestStreak: number }) => {
   const weekDays = getCurrentWeek();
 
   return (
@@ -14,11 +14,14 @@ const DaysSelector = () => {
         <h3 className="text-lg font-bold text-gray-800 m-0">
           Tus Hábitos Diarios
         </h3>
-        <div className="bg-amber-100 px-3 py-1 rounded-full flex items-center gap-1">
-          <Text className="text-amber-600 text-xs font-semibold">
-            🔥 Racha de 5 días
-          </Text>
-        </div>
+        {bestStreak > 0 && (
+          <div className="bg-amber-100 px-3 py-1 rounded-full flex items-center gap-1">
+            <Text className="text-amber-600 text-xs font-semibold">
+              🔥 Tu mejor racha es de {bestStreak} día
+              {bestStreak > 1 ? "s" : ""}
+            </Text>
+          </div>
+        )}
       </div>
 
       <div

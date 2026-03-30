@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Typography, Space, Skeleton } from "antd";
-import { SlidersHorizontal, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 const { Title, Text } = Typography;
 
 import { useAuth } from "@/providers/AuthProvider";
@@ -29,10 +29,6 @@ const DashboardHeader = ({
       )}
 
       <Space size="middle">
-        <Button className="flex items-center gap-2 !p-5 border-none bg-white shadow-sm hover:text-primary">
-          <SlidersHorizontal size={16} />
-          Filtrar hábitos
-        </Button>
         <Button
           type="primary"
           className="flex items-center gap-1 h-10 !p-5 !font-bold shadow-md shadow-emerald-100"
