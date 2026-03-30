@@ -15,6 +15,8 @@ export const mapHabitToDashboard = (
   habit: DashboardHabit,
   habitCompletions: string[],
   context: Context,
+  changeBestStreak: (s: number) => void,
+  habitsCompletedToday: Set<string>,
 ) => {
   const habitId = habit._id.toString();
 
@@ -33,7 +35,18 @@ export const mapHabitToDashboard = (
     context,
   );
 
+  const progress = {
+    completed: steps.filter((s) => s.status === "done").length,
+    target: steps.length,
+  };
+
   const streak = getHabitStreak(habit, habitCompletions, context);
+  changeBestStreak(streak);
+
+  const isCompletedToday = habitsCompletedToday.has(habitId);
+
+  const isCompletedThisWeek =
+    progress.target > 0 && progress.completed >= progress.target;
 
   return {
     id: habitId,
@@ -41,10 +54,9 @@ export const mapHabitToDashboard = (
     icon: habit.icon,
     frequency: habit.frequency,
     streak,
-    progress: {
-      completed: steps.filter((s) => s.status === "done").length,
-      target: steps.length,
-    },
+    progress,
+    isCompletedToday,
+    isCompletedThisWeek,
     steps,
   };
 };

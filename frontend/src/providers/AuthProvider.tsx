@@ -33,16 +33,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      const token = localStorage.getItem("habitzz_token");
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const { data } = await api.get("/auth/me");
-
         setUser(data);
       } catch (error) {
         console.error("Token inválido o expirado");
         localStorage.removeItem("habitzz_token");
         localStorage.removeItem("habitzz_user");
         setUser(null);
-        router.push("/login");
       } finally {
         setIsLoading(false);
       }

@@ -45,5 +45,7 @@ export const deleteAllCompletionsByUserId = async (userId: string) => {
 };
 
 export const findCompletionsByUser = async (userId: string) => {
-  return CompletionModel.find({ userId }).select("habitId periodKey").lean();
+  return CompletionModel.find({ userId })
+    .select("habitId periodKey createdAt")
+    .lean();
 };

@@ -15,6 +15,8 @@ export type DashboardHabit = {
   name: string;
   icon: string;
   frequency: HabitFrequency;
+  isCompletedToday: boolean;
+  isCompletedThisWeek: boolean;
   streak: number;
   progress: {
     completed: number;
@@ -38,6 +40,7 @@ export interface HabitSummary {
   totalSteps: number;
   completedSteps: number;
   progressPercentage: number;
+  bestStreak: number;
 }
 
 export interface HabitWeek {
@@ -47,6 +50,6 @@ export interface HabitWeek {
 
 export interface HabitResponse {
   habits: DashboardHabit[];
-  week: HabitWeek;
+
   summary: HabitSummary;
 }
