@@ -11,6 +11,7 @@ import { useState } from "react";
 
 const HabitList = ({ habits }: { habits: DashboardHabit[] }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(habits);
 
   return (
     <div className="bg-white border border-gray-100 rounded-layout shadow-sm overflow-hidden">

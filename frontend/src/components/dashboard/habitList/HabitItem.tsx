@@ -1,4 +1,6 @@
 "use client";
+import { useEffect, useState } from "react";
+
 import { Check } from "lucide-react";
 import { Typography, Popconfirm } from "antd";
 const { Text } = Typography;
@@ -9,8 +11,18 @@ import { DashboardHabit } from "@/types/habits.types";
 
 import { useCompleteHabitMutation } from "@/hooks/useHabitMutations";
 
+import { currentHabitDay } from "@/utils/currentHabitDay";
+
 const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
   const { mutate: completeHabit, isPending } = useCompleteHabitMutation();
+
+  const [isToday, setIsToday] = useState(false);
+
+  useEffect(() => {
+    if (habit.frequency.type === "weekly_specific_days") {
+      setIsToday(currentHabitDay(habit.frequency as any));
+    }
+  }, [habit.frequency]);
 
   return (
     <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group">
@@ -32,12 +44,17 @@ const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
               {habit.progress.target}
             </Text>
 
-            <Text
-              type="secondary"
-              className="text-[10px] md:text-xs flex items-center gap-1"
-            >
-              🔥 {habit.streak} días seguidos
-            </Text>
+            {habit.streak > 0 && (
+              <Text
+                type="secondary"
+                className="text-[10px] md:text-xs flex items-center gap-1"
+              >
+                🔥 {habit.streak}{" "}
+                {habit.frequency.type === "daily"
+                  ? "días seguidos"
+                  : "semanas seguidas"}
+              </Text>
+            )}
           </div>
         </div>
       </div>
@@ -51,7 +68,8 @@ const HabitItem = ({ habit }: { habit: DashboardHabit }) => {
         okButtonProps={{ loading: isPending }}
       >
         <button
-          className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all bg-gray-400 text-white scale-110 hover:bg-primary/70 hover:cursor-pointer`}
+          disabled={isToday || habit.isCompletedToday}
+          className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all text-white scale-110 ${isToday ? "bg-gray-400" : habit.isCompletedToday ? "bg-primary" : "bg-gray-400 hover:bg-primary/70 hover:cursor-pointer"}`}
         >
           <Check size={16} strokeWidth={3} className="block text-gray-200" />
         </button>

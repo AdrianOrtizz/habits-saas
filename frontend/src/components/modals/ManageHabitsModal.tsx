@@ -67,7 +67,7 @@ const ManageHabitsModal = ({
       destroyOnHidden
     >
       <div className="flex flex-col">
-        {habits.map((habit) => {
+        {habits?.map((habit) => {
           const isEditing = editingId === habit.id;
 
           return (
