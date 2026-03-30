@@ -20,7 +20,15 @@ const mapGoal = (g: any) => ({
 export const getGoalsForCurrentWeek = async (userId: string) => {
   const currentWeekKey = getWeekKey();
   const currentGoals = await findGoalsByWeek(userId, currentWeekKey);
-  return currentGoals.map(mapGoal);
+
+  const total = currentGoals.length;
+  const completed = currentGoals.filter((g) => g.completed).length;
+  const percentage = (completed / total) * 100;
+
+  return {
+    goals: currentGoals.map(mapGoal),
+    summary: { total, percentage, completed },
+  };
 };
 
 export const createGoal = async (
