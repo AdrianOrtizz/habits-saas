@@ -41,13 +41,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: "https://habitzz.vercel.app",
+    url: "https://habitzz-track.vercel.app",
     title: "Habitzz - Conquista tus metas",
     description: "Trackea tus rutinas y alcanza tu mejor versión con Habitzz.",
     siteName: "Habitzz",
     images: [
       {
-        url: "https://habitzz.vercel.app/landing.png",
+        url: "https://habitzz-track.vercel.app/landing.png",
         width: 1200,
         height: 630,
         alt: "Habitzz Dashboard Preview",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Habitzz",
     description: "Trackeo de hábitos y objetivos semanales.",
-    images: ["https://habitzz.vercel.app/landing.png"],
+    images: ["https://habitzz-track.vercel.app/landing.png"],
   },
   manifest: "/site.webmanifest",
 };
