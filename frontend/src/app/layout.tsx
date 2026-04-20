@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: "https://habitzz.vercel.app",
+    url: "https://habitzz-track.vercel.app",
     title: "Habitzz - Conquista tus metas",
     description: "Trackea tus rutinas y alcanza tu mejor versión con Habitzz.",
     siteName: "Habitzz",
