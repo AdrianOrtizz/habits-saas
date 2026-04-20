@@ -45,7 +45,13 @@ const CreateGoalModal = ({ isOpen, onClose }: CreateGoalModalProps) => {
         <Form.Item
           name="name"
           label="¿Cuál es tu objetivo?"
-          rules={[{ required: true, message: "Escribí el nombre de tu meta" }]}
+          rules={[
+            {
+              required: true,
+              min: 3,
+              message: "El objetivo debe tener mínimo 3 caracteres",
+            },
+          ]}
         >
           <Input
             placeholder="Ej: Leer 100 páginas, Ir al gym 3 veces..."

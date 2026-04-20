@@ -14,8 +14,6 @@ export default function HomePage() {
   const { data, isLoading } = useDashboard();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(data);
-
   return (
     <div>
       <DashboardHeader setIsModalOpen={setIsModalOpen} />

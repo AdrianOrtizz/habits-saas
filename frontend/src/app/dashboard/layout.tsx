@@ -4,7 +4,7 @@ import MainLayout from "@/components/layout/MainLayout";
 
 import { useAuth } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Loading from "@/components/common/Spinner";
 
@@ -14,6 +14,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { isAuthenticated, isLoading } = useAuth();
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const turnCollapsed = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   const router = useRouter();
 
   useEffect(() => {
@@ -26,5 +32,9 @@ export default function DashboardLayout({
 
   if (!isAuthenticated) return null;
 
-  return <MainLayout>{children}</MainLayout>;
+  return (
+    <MainLayout isCollapsed={isCollapsed} turn={turnCollapsed}>
+      {children}
+    </MainLayout>
+  );
 }

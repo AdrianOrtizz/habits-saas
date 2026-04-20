@@ -14,14 +14,18 @@ export default function GoalsPage() {
 
   return (
     <div className="space-y-10">
-      <GoalsHeader setIsModalOpen={setIsModalOpen} />
-      <GoalsSummary summary={data?.summary} />
-      <GoalList data={data?.goals} isLoading={isLoading} />
+      {!!data && !isLoading && (
+        <div>
+          <GoalsHeader setIsModalOpen={setIsModalOpen} />
+          <GoalsSummary summary={data?.summary} />
+          <GoalList data={data?.goals} isLoading={isLoading} />
 
-      <CreateGoalModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+          <CreateGoalModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }

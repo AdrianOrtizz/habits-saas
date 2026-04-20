@@ -9,12 +9,12 @@ export const SidebarMenu = () => {
 
   const menuItems = [
     {
-      key: "/",
+      key: "/dashboard",
       icon: <LayoutDashboard size={20} />,
       label: "Hábitos",
     },
     {
-      key: "/goals",
+      key: "/dashboard/goals",
       icon: <Target size={20} />,
       label: "Objetivos",
     },

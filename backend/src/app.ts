@@ -11,3 +11,7 @@ app.use(express.json());
 
 app.use("/api/v1", router);
 app.use(errorMiddleware);
+
+app.get("/ping", (req, res) => {
+  res.status(200).send("ok");
+});

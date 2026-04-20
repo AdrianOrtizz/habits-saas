@@ -2,7 +2,7 @@
 
 import { Button, Typography, Space, Skeleton } from "antd";
 import { Plus } from "lucide-react";
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 import { useAuth } from "@/providers/AuthProvider";
 
@@ -22,9 +22,6 @@ const DashboardHeader = ({
           <Title level={2} style={{ margin: 0 }}>
             Hola, {user?.name} 👋
           </Title>
-          <Text type="secondary" className="text-sm">
-            Estás en una racha de 5 días. ¡Sigue así!
-          </Text>
         </div>
       )}
 

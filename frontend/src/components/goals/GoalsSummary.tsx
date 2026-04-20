@@ -94,36 +94,42 @@ const GoalsSummary = ({
 }) => {
   return (
     <div className="mb-10">
-      <Flex
-        justify="space-between"
-        align="center"
-        className="mb-5 flex-wrap gap-3"
-      >
-        <Tag
-          color="warning"
-          className="!bg-amber-100 !text-amber-700 !border-none !rounded-full !px-4 !py-1 !text-xs !font-semibold"
-        >
-          {summary?.completed} de {summary?.total} completados
-        </Tag>
-      </Flex>
+      {!!summary ? (
+        <div>
+          <Flex
+            justify="space-between"
+            align="center"
+            className="mb-5 flex-wrap gap-3"
+          >
+            <Tag
+              color="warning"
+              className="!bg-amber-100 !text-amber-700 !border-none !rounded-full !px-4 !py-1 !text-xs !font-semibold"
+            >
+              {summary?.completed} de {summary?.total} completados
+            </Tag>
+          </Flex>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SummaryCard
-          title="Completados"
-          value={`${summary?.percentage.toFixed(2)}%`}
-          description="Tu progreso en la semana"
-          extra={
-            <Progress
-              percent={summary?.percentage}
-              strokeColor="#63d392"
-              showInfo={false}
-              className="m-0"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <SummaryCard
+              title="Completados"
+              value={`${summary?.percentage || 0}%`}
+              description="Tu progreso en la semana"
+              extra={
+                <Progress
+                  percent={summary?.percentage}
+                  strokeColor="#63d392"
+                  showInfo={false}
+                  className="m-0"
+                />
+              }
             />
-          }
-        />
 
-        <TimeRemainingCard />
-      </div>
+            <TimeRemainingCard />
+          </div>
+        </div>
+      ) : (
+        <div />
+      )}
     </div>
   );
 };
