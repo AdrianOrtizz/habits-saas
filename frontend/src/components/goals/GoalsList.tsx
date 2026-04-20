@@ -1,0 +1,57 @@
+"use client";
+import { Flex, Typography } from "antd";
+const { Title } = Typography;
+
+import GoalItem from "./GoalsItem";
+import Loading from "../common/Spinner";
+import EmptyState from "../common/EmptyState";
+
+import { Goal } from "@/types/goals.types";
+
+const GoalList = ({
+  data,
+  isLoading,
+}: {
+  data: Goal[];
+  isLoading: boolean;
+}) => {
+  return (
+    <div className="bg-white border border-gray-100 rounded-layout shadow-sm overflow-hidden p-6 md:p-8">
+      <Flex
+        justify="space-between"
+        align="center"
+        className="mb-6 flex-wrap gap-2"
+      >
+        <Title
+          level={4}
+          className="!my-8 !leading-tight font-bold text-gray-800"
+        >
+          Lista de objetivos
+        </Title>
+      </Flex>
+
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="space-y-4">
+          {data.length === 0 ? (
+            <EmptyState
+              title="No tenés objetivos activos"
+              description="Ponete una meta y hacé que cada día cuente."
+              buttonText="Definir un Objetivo"
+              imageType="default"
+            />
+          ) : (
+            <div>
+              {data.map((goal: Goal) => (
+                <GoalItem key={goal.id} goal={goal} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default GoalList;
