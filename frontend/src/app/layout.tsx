@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "Habitzz",
     images: [
       {
-        url: "https://habitzz.vercel.app/landing.png",
+        url: "https://habitzz-track.vercel.app/landing.png",
         width: 1200,
         height: 630,
         alt: "Habitzz Dashboard Preview",
