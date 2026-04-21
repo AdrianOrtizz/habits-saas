@@ -21,6 +21,6 @@ router.post("/clone", cloneGoalsController);
 router.patch("/complete", completeGoalController);
 router.patch("/update-name", updateGoalNameController);
 
-router.delete("/", deleteGoalController);
+router.delete("/:id", deleteGoalController);
 
 export default router;

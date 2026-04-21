@@ -5,6 +5,7 @@ import {
   goalIdSchema,
   updateGoalSchema,
   createGoalSchema,
+  deleteGoalSchema,
 } from "../schemas/goal.schema";
 import {
   getGoalsForCurrentWeek,
@@ -46,9 +47,9 @@ export const updateGoalNameController = asyncHandler(
   async (req: AuthRequest, res: Response) => {
     const parsed = updateGoalSchema.parse(req);
     const updatedGoal = await updateGoalName(
-      parsed.body.id,
+      parsed.body.goalId,
       req.userId!,
-      parsed.body.name!,
+      parsed.body.newName!,
     );
     res.json(updatedGoal);
   },
@@ -56,8 +57,8 @@ export const updateGoalNameController = asyncHandler(
 
 export const deleteGoalController = asyncHandler(
   async (req: AuthRequest, res: Response) => {
-    const parsed = goalIdSchema.parse(req);
-    await deleteGoal(parsed.body.id, req.userId!);
+    const parsed = deleteGoalSchema.parse(req);
+    await deleteGoal(parsed.params.id, req.userId!);
     res.json({ message: "Objetivo eliminado correctamente" });
   },
 );
