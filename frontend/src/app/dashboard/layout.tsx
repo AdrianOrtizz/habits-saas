@@ -26,7 +26,7 @@ export default function DashboardLayout({
     if (!isAuthenticated && !isLoading) {
       router.push("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isLoading, router]);
 
   if (isLoading) return <Loading />;
 
