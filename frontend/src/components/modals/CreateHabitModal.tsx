@@ -54,16 +54,16 @@ const CreateHabitModal = ({ isOpen, onClose }: CreateHabitModalProps) => {
           <Select
             options={[
               { label: "Diario", value: "daily" },
-              {
-                label: "Semanal (Días específicos)",
-                value: "weekly_specific_days",
-              },
+              // {
+              //   label: "Semanal (Días específicos)",
+              //   value: "weekly_specific_days",
+              // },
               { label: "Semanal (Cantidad de días)", value: "weekly_times" },
             ]}
           />
         </Form.Item>
 
-        {frequencyType === "weekly_specific_days" && (
+        {/* {frequencyType === "weekly_specific_days" && (
           <Form.Item
             name={["frequency", "daysOfWeek"]}
             label="¿Qué días vas a hacerlo?"
@@ -74,7 +74,7 @@ const CreateHabitModal = ({ isOpen, onClose }: CreateHabitModalProps) => {
               className="flex flex-wrap gap-2"
             />
           </Form.Item>
-        )}
+        )} */}
 
         {frequencyType === "weekly_times" && (
           <Form.Item
