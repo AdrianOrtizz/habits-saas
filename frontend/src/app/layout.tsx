@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "Habitzz",
     images: [
       {
-        url: "https://habitzz-track.vercel.app/landing.png",
+        url: "/landing.png",
         width: 1200,
         height: 630,
         alt: "Habitzz Dashboard Preview",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Habitzz",
     description: "Trackeo de hábitos y objetivos semanales.",
-    images: ["https://habitzz-track.vercel.app/landing.png"],
+    images: ["/landing.png"],
   },
   manifest: "/site.webmanifest",
 };
