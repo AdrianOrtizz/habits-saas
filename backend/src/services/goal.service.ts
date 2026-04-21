@@ -23,7 +23,7 @@ export const getGoalsForCurrentWeek = async (userId: string) => {
 
   const total = currentGoals.length;
   const completed = currentGoals.filter((g) => g.completed).length;
-  const percentage = (completed / total) * 100;
+  const percentage = ((completed / total) * 100).toFixed(2);
 
   return {
     goals: currentGoals.map(mapGoal),
