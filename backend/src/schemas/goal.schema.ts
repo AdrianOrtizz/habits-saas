@@ -26,8 +26,8 @@ export const createGoalSchema = z.object({
 
 export const updateGoalSchema = z.object({
   body: z.object({
-    id: z.string().regex(/^[0-9a-fA-F]{24}$/, "ID de objetivo inválido"),
-    name: z
+    goalId: z.string().regex(/^[0-9a-fA-F]{24}$/, "ID de objetivo inválido"),
+    newName: z
       .string()
       .min(3)
       .max(100)
@@ -37,5 +37,11 @@ export const updateGoalSchema = z.object({
         "El nombre solo puede contener letras, números y espacios",
       )
       .optional(),
+  }),
+});
+
+export const deleteGoalSchema = z.object({
+  params: z.object({
+    id: z.string().regex(objectIdRegex, "ID de hábito inválido"),
   }),
 });

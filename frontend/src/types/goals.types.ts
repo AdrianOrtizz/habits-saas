@@ -9,3 +9,8 @@ export interface CreateGoal {
   name: string;
   icon: string;
 }
+
+export interface UpdateGoalNameData {
+  goalId: string;
+  newName: string;
+}

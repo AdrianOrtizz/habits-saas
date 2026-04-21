@@ -2,9 +2,13 @@
 import { Flex, Typography } from "antd";
 const { Title } = Typography;
 
+import { useState } from "react";
+import { Button } from "antd";
+
 import GoalItem from "./GoalsItem";
 import Loading from "../common/Spinner";
 import EmptyState from "../common/EmptyState";
+import ManageGoalsModal from "../modals/ManageGoalsModal";
 
 import { Goal } from "@/types/goals.types";
 
@@ -15,6 +19,8 @@ const GoalList = ({
   data: Goal[];
   isLoading: boolean;
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="bg-white border border-gray-100 rounded-layout shadow-sm overflow-hidden p-6 md:p-8">
       <Flex
@@ -46,8 +52,24 @@ const GoalList = ({
               {data.map((goal: Goal) => (
                 <GoalItem key={goal.id} goal={goal} />
               ))}
+
+              <div className="bg-gray-50/50 p-3 text-center">
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  type="link"
+                  className="!text-primary"
+                >
+                  Gestionar objetivos
+                </Button>
+              </div>
             </div>
           )}
+
+          <ManageGoalsModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            goals={data}
+          />
         </div>
       )}
     </div>
