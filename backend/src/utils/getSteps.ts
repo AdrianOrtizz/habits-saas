@@ -1,8 +1,19 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import isoWeek from "dayjs/plugin/isoWeek";
+
 import {
   DashboardHabit,
   HabitStep,
   StepStatus,
 } from "../types/dashboard.types";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(isoWeek);
+
+const TZ = "America/Argentina/Buenos_Aires";
 
 const WEEKDAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
@@ -11,17 +22,18 @@ export const buildDailySteps = (
   weekDates: Date[],
   completionDates: Set<string>,
 ): HabitStep[] => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = dayjs().tz(TZ).startOf("day");
 
   return weekDates.map((date, index) => {
-    const iso = date.toISOString().split("T")[0];
+    const currentDay = dayjs(date).tz(TZ);
+
+    const iso = currentDay.format("YYYY-MM-DD");
 
     let status: StepStatus;
 
     if (completionDates.has(`${habitId}_${iso}`)) {
       status = "done";
-    } else if (date < today) {
+    } else if (currentDay.isBefore(today)) {
       status = "missed";
     } else {
       status = "pending";
@@ -39,26 +51,26 @@ export const buildSpecificDaysSteps = (
   weekDates: Date[],
   completionDates: Set<string>,
 ): HabitStep[] => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = dayjs().tz(TZ).startOf("day");
   const steps: HabitStep[] = [];
 
   weekDates.forEach((date) => {
-    const jsDay = date.getDay();
-    const mondayBased = jsDay === 0 ? 6 : jsDay - 1;
+    const currentDay = dayjs(date).tz(TZ);
+
+    const mondayBased = currentDay.isoWeekday() - 1;
 
     if (!habit.frequency.daysOfWeek.includes(mondayBased)) {
       return;
     }
 
-    const iso = date.toISOString().split("T")[0];
+    const iso = currentDay.format("YYYY-MM-DD");
     const key = `${habit._id.toString()}_${iso}`;
 
     let status: StepStatus;
 
     if (completionDates.has(key)) {
       status = "done";
-    } else if (date < today) {
+    } else if (currentDay.isBefore(today)) {
       status = "missed";
     } else {
       status = "pending";

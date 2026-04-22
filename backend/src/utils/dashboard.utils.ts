@@ -1,3 +1,7 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 import {
   calculateDailyStreak,
   calculateWeeklyStreak,
@@ -10,6 +14,11 @@ import {
 } from "../utils/getSteps";
 
 import { DashboardHabit, Context } from "../types/dashboard.types";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const TZ = "America/Argentina/Buenos_Aires";
 
 export const mapHabitToDashboard = (
   habit: DashboardHabit,
@@ -66,8 +75,8 @@ const countWeeklyCompletions = (
   completions: string[],
   ctx: Context,
 ) => {
-  const isoStart = ctx.weekStart.toISOString().split("T")[0];
-  const isoEnd = ctx.weekEnd.toISOString().split("T")[0];
+  const isoStart = dayjs(ctx.weekStart).tz(TZ).format("YYYY-MM-DD");
+  const isoEnd = dayjs(ctx.weekEnd).tz(TZ).format("YYYY-MM-DD");
 
   return completions.filter((key) =>
     habit.frequency.type === "weekly_times"

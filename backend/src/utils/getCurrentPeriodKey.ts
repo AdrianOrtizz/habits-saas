@@ -1,29 +1,35 @@
-export const getWeekKey = (date: Date = new Date()): string => {
-  const d = new Date(
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
-  );
-  const dayNum = d.getUTCDay() || 7;
-  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const weekNo = Math.ceil(
-    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7,
-  );
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import isoWeek from "dayjs/plugin/isoWeek";
 
-  return `${d.getUTCFullYear()}-W${weekNo.toString().padStart(2, "0")}`;
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(isoWeek);
+
+const TZ = "America/Argentina/Buenos_Aires";
+
+export const getWeekKey = (date?: Date | string | number): string => {
+  const d = date ? dayjs(date).tz(TZ) : dayjs().tz(TZ);
+
+  const year = d.isoWeekYear();
+  const week = d.isoWeek().toString().padStart(2, "0");
+
+  return `${year}-W${week}`;
 };
 
 export const getCurrentPeriodKey = (
   frequencyType: string,
   currentCount: number = 0,
 ): string => {
-  const now = new Date();
+  const now = dayjs().tz(TZ);
 
   if (frequencyType === "daily" || frequencyType === "weekly_specific_days") {
-    return now.toISOString().split("T")[0];
+    return now.format("YYYY-MM-DD");
   }
 
   if (frequencyType === "weekly_times") {
-    const weekKey = getWeekKey(now);
+    const weekKey = getWeekKey(now.toDate());
     return `${weekKey}-${currentCount + 1}`;
   }
 

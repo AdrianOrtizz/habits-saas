@@ -1,3 +1,10 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const TZ = "America/Argentina/Buenos_Aires";
+
 import {
   getStartOfWeek,
   getEndOfWeek,
@@ -18,18 +25,16 @@ export const getDashboard = async (userId: string) => {
   const habits = await findActiveHabitsByUserId(userId);
   const allCompletions = await findCompletionsByUser(userId);
 
-  const now = new Date();
-  const startOfToday = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-  );
+  const nowArg = dayjs().tz(TZ);
+  const nowDate = nowArg.toDate();
+  const startOfToday = nowArg.startOf("day").toDate();
+
   const context = {
-    todayISO: now.toISOString().split("T")[0],
-    currentWeekKey: getWeekKey(now),
-    weekStart: getStartOfWeek(now),
-    weekEnd: getEndOfWeek(getStartOfWeek(now)),
-    weekDates: getWeekDates(getStartOfWeek(now)),
+    todayISO: nowArg.format("YYYY-MM-DD"),
+    currentWeekKey: getWeekKey(nowDate),
+    weekStart: getStartOfWeek(nowDate),
+    weekEnd: getEndOfWeek(getStartOfWeek(nowDate)),
+    weekDates: getWeekDates(getStartOfWeek(nowDate)),
   };
 
   const completionsMap = groupCompletionsByHabit(allCompletions);

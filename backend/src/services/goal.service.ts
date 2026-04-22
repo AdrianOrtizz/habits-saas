@@ -1,3 +1,10 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const TZ = "America/Argentina/Buenos_Aires";
+
 import {
   findGoalsByWeek,
   create,
@@ -86,12 +93,11 @@ export const deleteGoal = async (goalId: string, userId: string) => {
 };
 
 export const cloneLastWeekGoals = async (userId: string) => {
-  const now = new Date();
-  const currentWeekKey = getWeekKey(now);
+  const nowArg = dayjs().tz(TZ);
+  const currentWeekKey = getWeekKey(nowArg.toDate());
 
-  const lastWeekDate = new Date(now);
-  lastWeekDate.setDate(now.getDate() - 7);
-  const lastWeekKey = getWeekKey(lastWeekDate);
+  const lastWeekDate = nowArg.subtract(1, "week");
+  const lastWeekKey = getWeekKey(lastWeekDate.toDate());
 
   const lastGoals = await findGoalsByWeek(userId, lastWeekKey);
 

@@ -1,10 +1,19 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { getWeekKey } from "./getDays";
 import { DashboardHabit } from "../types/dashboard.types";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const TZ = "America/Argentina/Buenos_Aires";
+
 const getDiffInDays = (dateStr1: string, dateStr2: string) => {
-  const d1 = new Date(dateStr1).getTime();
-  const d2 = new Date(dateStr2).getTime();
-  return Math.floor((d1 - d2) / (1000 * 60 * 60 * 24));
+  const d1 = dayjs(dateStr1).tz(TZ).startOf("day");
+  const d2 = dayjs(dateStr2).tz(TZ).startOf("day");
+
+  return d1.diff(d2, "day");
 };
 
 export const calculateDailyStreak = (
@@ -48,7 +57,7 @@ export const calculateWeeklyStreak = (
       const parts = key.split("-");
       weekKey = `${parts[0]}-${parts[1]}`;
     } else {
-      weekKey = getWeekKey(new Date(key));
+      weekKey = getWeekKey(key);
     }
 
     weeks.set(weekKey, (weeks.get(weekKey) || 0) + 1);
@@ -70,17 +79,4 @@ export const calculateWeeklyStreak = (
   }
 
   return streak;
-};
-
-const getWeekNumber = (date: Date) => {
-  const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
-  );
-  const dayNum = d.getUTCDay() || 7;
-
-  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-
-  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 };
