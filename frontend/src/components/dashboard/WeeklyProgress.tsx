@@ -24,22 +24,21 @@ const WeeklyProgress = ({
     >
       <div className="absolute top-[-40px] right-[-20px] w-48 h-48 bg-white/10 rounded-full blur-2xl z-0" />
 
-      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-12">
-        <div className="flex-2">
-          <Title
-            level={4}
-            className="!text-white !text-xl md:!text-3xl !font-bold !m-0 mb-1"
-          >
-            Progreso Semanal
-          </Title>
-          <Text className="!text-emerald-50/90 !text-md md:!text-lg font-bold">
-            ¡Vas por muy buen camino! Seguí así para cumplir tus objetivos.
-          </Text>
-        </div>
-
-        {isLoading ? (
-          <Skeleton active />
-        ) : (
+      {isLoading ? (
+        <Skeleton active />
+      ) : (
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-12">
+          <div className="flex-2">
+            <Title
+              level={4}
+              className="!text-white !text-xl md:!text-3xl !font-bold !m-0 mb-1"
+            >
+              Progreso Semanal
+            </Title>
+            <Text className="!text-emerald-50/90 !text-md md:!text-lg font-bold">
+              ¡Vas por muy buen camino! Seguí así para cumplir tus objetivos.
+            </Text>
+          </div>
           <div className="flex-1 w-full">
             <Progress
               percent={summary?.progressPercentage}
@@ -54,8 +53,8 @@ const WeeklyProgress = ({
               </Text>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </Card>
   );
 };
