@@ -1,20 +1,30 @@
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(isoWeek);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const TZ = "America/Argentina/Buenos_Aires";
+
+const WEEKDAY_LABELS = ["LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB", "DOM"];
+
 export const getCurrentWeek = () => {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
-  const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-  const monday = new Date(today.setDate(diff));
+  const today = dayjs().tz(TZ);
+
+  const startOfWeek = today.startOf("isoWeek");
 
   return Array.from({ length: 7 }).map((_, i) => {
-    const date = new Date(monday);
-    date.setDate(monday.getDate() + i);
+    const date = startOfWeek.add(i, "day");
 
     return {
-      fullDate: date,
-      dayName: date
-        .toLocaleDateString("es-AR", { weekday: "short" })
-        .toUpperCase(),
-      dayNumber: date.getDate(),
-      isToday: new Date().toDateString() === date.toDateString(),
+      fullDate: date.toDate(),
+      dayName: WEEKDAY_LABELS[i],
+      dayNumber: date.date(),
+
+      isToday: date.isSame(today, "day"),
     };
   });
 };
